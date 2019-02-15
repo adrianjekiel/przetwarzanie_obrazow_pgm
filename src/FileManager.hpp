@@ -21,7 +21,7 @@ class DummyData;
 class FileManager
 {
 public:
-    std::vector<DummyData> loadData(const std::string& fileName);
+    std::vector<DummyData> loadData(const std::vector<std::string>& string_vec);
     bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
 };
 
