@@ -10,14 +10,14 @@
 namespace prework
 {
 
-std::vector<DummyData> FileManager::loadData(std::vector<std::string>& string_vec)
+std::vector<std::string> FileManager::loadData(const std::string& fileName) //file name nazwa istniejocego pliku
 {
-    std::vector<std::string>> string_vec;
+    std::vector<std::string> string_vec;
     std::string temp;
     std::ifstream input(fileName);
     if(input.is_open())
     {
-        std::cout<<"could be opened";<<std::endl;
+        std::cout<<"could be opened"<<std::endl;
         while( std::getline(input, temp))
         {
            string_vec.push_back(temp);
@@ -29,22 +29,23 @@ std::vector<DummyData> FileManager::loadData(std::vector<std::string>& string_ve
     return string_vec;
 }
 
-bool FileManager::saveData(const std::string& fileName,std::vector<std::string>& string_vec)
+bool FileManager::saveData(const std::string& fileName,const std::vector<std::string>& string_vec)
 {
     std::cout << fileName << std::endl;
-    std::fstream inOut(fileName);
-    if(inOut.is_open())
+    std::ofstream output(fileName);
+    if(output.is_open())
     {
-        std::cout<<"could be opened";<<std::endl;
-        for(const DummyData& elem : string_vec)
+        std::cout<<"could be opened"<<std::endl;
+        for(const std::string& elem : string_vec)
         {
-            //inOut << elem << std::endl; nwm takie cos?
-            std::cout << elem << std::endl;
+            output << elem << std::endl;
+            if(not output.good())
+            {
+                std::cout << "we close file, because problem has occured" <<std::endl;
+                break;
+            }
         }
-    }
-    if(inOut.is_good())
-    {
-        std::cout<<" File is good";
+        output.close();
     }
 
     return true;

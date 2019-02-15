@@ -21,8 +21,8 @@ class DummyData;
 class FileManager
 {
 public:
-    std::vector<DummyData> loadData(const std::vector<std::string>& string_vec);
-    bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
+    std::vector<std::string> loadData(const std::string& fileName);
+    bool saveData(const std::string& fileName, const std::vector<std::string>& string_vec);
 };
 
 }  // namespace prework
