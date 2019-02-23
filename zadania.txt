@@ -1,0 +1,7 @@
+wczytaj plik sygna³y.txt, zawiera on tylko du¿e znaki
+
+zad 1. z³¹czaj¹c 10 litere co 40-tego s³owa otrzymamy pewnie zdanie, wypisz je
+
+zad 2. znajdŸ s³owo w którym znajduje siê najwiêksza liczba ró¿nych liter, wypisz s³owo oraz iloœæ liter
+
+zad 3. wypisz wszystkie s³owa w których litery s¹ od siebie oddalone w alfabecie o mniej ni¿ 10. kolejnoœæ wypisywania powinna byc taka sama jak w przypadku pliku sygna³y.txt
