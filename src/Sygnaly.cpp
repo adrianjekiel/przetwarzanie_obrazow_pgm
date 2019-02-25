@@ -4,6 +4,7 @@
  **/
 
 #include "Sygnaly.hpp"
+#include <iostream>
 
 namespace prework
 {
@@ -14,9 +15,9 @@ Sygnaly::Sygnaly(const std::vector<std::string>& vecSygnaly) :
 void Sygnaly::zad1()
 {
     std::string temp;
-    for(int i=40 ; i<vecSygnaly_.size();i+=40)
+    for(int i=39 ; i<vecSygnaly_.size();i+=40)
     {
-        temp.push_back(vecSygnaly_[i][10]);
+        temp.push_back(vecSygnaly_[i][9]);
     }
     std::cout<<temp<<std::endl;
 }
