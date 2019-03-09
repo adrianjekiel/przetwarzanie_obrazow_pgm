@@ -18,8 +18,12 @@ class Sygnaly
 public:
     Sygnaly(const std::vector<std::string>& vecSygnaly);
     void zad1();
+    void zad2();
+    void zad3();
 private:
+    bool diff_less_then_ten(const std::string& sygnal);
     std::vector<std::string> vecSygnaly_;
+
 
 };
 

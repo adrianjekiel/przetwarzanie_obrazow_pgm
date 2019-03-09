@@ -21,6 +21,8 @@ void run()
     auto data = manager.loadData(fileName);
     auto sygnaly = Sygnaly(data);
     sygnaly.zad1();
+    sygnaly.zad2();
+    sygnaly.zad3();
     std::cout << "Result will be saved to output.txt file" << std::endl;
     manager.saveData("output.txt", data);
 }
