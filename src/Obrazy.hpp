@@ -19,7 +19,9 @@ public:
     void zad1();
     void zad2();
     void zad3();
+    void zad4();
 private:
+    bool diff(const int x1, const int y1, const int x2, const int y2);
     std::vector<std::vector<int>> dane_;
 };
 

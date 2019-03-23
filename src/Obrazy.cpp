@@ -48,89 +48,64 @@ void Obrazy::zad2()
 void Obrazy::zad3()
 {
     int counter = 0;
-    for(int x = 0 ; x<=200 ; x++)
+    for(int x = 0 ; x<dane_.size() ; x++)
     {
-        for(int y = 0; y<=320 ; y++)
+        for(int y = 0; y<dane_[x].size() ; y++)
         {
-            if(x>=1 and x<=199 and y>=1 and y<=319)
-            {
+           if(x-1>=0 and diff(x,y,x-1,y))
+           {
+                   counter++;
+           }
+           else if(x+1<dane_.size() and diff(x,y,x+1,y))
+           {
+                   counter++;
+           }
+           else if(y-1>=0 and diff(x,y,x,y-1))
+           {
+                   counter++;
+           }
+           else if(y+1<dane_[x].size() and diff(x,y,x,y+1))
+           {
+                   counter++;
+           }
+        }   
+    }
+    std::cout<<counter<<std::endl;
+}
 
-                if(dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y+1]>128
-                        or dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y-1]>128)
-                {
-                    counter++;
-                }
-            }
-            else if(x==0)
-            {
-                if(y==0)
-                {
-                    if(dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y+1]>128)
-                    {
-                        counter++;
-                    }
-                }
-                else if(y>0 and y<320)
-                {
-                    if(dane_[x][y]-dane_[x][y-1]>128 or dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y+1]>128)
-                    {
-                        counter++;
-                    }
-                }
-                else if(y==320)
-                {
-                    if(dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y-1]>128)
-                    {
-                        counter++;
-                    }
-                }
-
-            }
-            else if(y==0 and x>0 and x<200)
-            {
-                if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y+1]>128 or dane_[x][y]-dane_[x+1][y]>128)
-                {
-                    counter++;
-                }
-            }
-            else if(y==0 and x==200)
-            {
-                if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y+1]>128)
-                {
-                    counter++;
-                }
-            }
-            else if(x==200)
-            {
-                if(y>0 and y<320)
-                {
-                    if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y+1]>128
-                            or dane_[x][y]-dane_[x][y-1]>128)
-                    {
-                        counter++;
-                    }
-                }
-                else if(y==320)
-                {
-                    if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y-1]>128)//prway dolny
-                    {
-                        counter++;
-                    }
-                }
-            }
-            else if(y==320 and x>0 and x<200)
-            {
-                if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y-1]>128 or dane_[x][y]-dane_[x+1][y]>128)//prway kw
-                {
-                    counter++;
-                }
-            }
+void Obrazy::zad4()
+{
+    int max = 0;
+    int x = 0;
+    int counter;
+    for(int y = 0 ; y<dane_[x].size() ; y++)
+    {
+        counter = 0;
+        int core_piksel = dane_[0][y];
+        for(x = 0; x<dane_.size() ; x++)
+        {
+            if(dane_[x][y] == core_piksel)
+                counter++;
+            else
+                break;
 
         }
-
-        std::cout<<counter<<std::endl;
+        if(max<counter)
+            max=counter;
     }
 
+    std::cout<<max<<std::endl;
+
 }
+
+bool Obrazy::diff(const int x1, const int y1, const int x2, const int y2)
+{
+    if(abs(dane_[x1][y1]-dane_[x2][y2])>128)
+        return true;
+    else
+        return false;
+
+}
+
 
 }// prework

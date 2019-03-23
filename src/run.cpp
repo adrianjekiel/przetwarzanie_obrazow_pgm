@@ -23,6 +23,7 @@ void run()
     obrazy.zad1();
     obrazy.zad2();
     obrazy.zad3();
+    obrazy.zad4();
 
     std::cout << "Result will be saved to output.txt file" << std::endl;
     //manager.saveData("output.txt", data);
