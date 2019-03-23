@@ -2,46 +2,135 @@
  * Made by Adrian Jekiel
  * Year 2019
  **/
+#include <iostream>
+#include "Obrazy.hpp"
+#include <algorithm>
 
-#include "FileManager.hpp"
-#include "DummyData.hpp"
-#include <fstream>
-#include <sstream>
 namespace prework
 {
+Obrazy::Obrazy(const std::vector<std::vector<int>> &dane):
+    dane_(dane)
+{}
 
-std::vector<std::vector<int>> FileManager::loadData(const std::string& fileName)
+void Obrazy::zad1()
 {
-    std::string line;
-    std::vector<std::vector<int>> temp;
-
-    std::ifstream input(fileName);
-    if(input.is_open())
+    int max=0;
+    int min=255;
+    for(auto elem : dane_)
     {
-          while(std::getline(input,line))//idzie po enterach
-          {
-              std::vector<int> tymczasowy;//wiersz podzielny na liczby
-              std::stringstream tline{line};//konwerujemy line na stream
-              for(int i=0; i<320; i++)
-              {
-                  int x;
-                  tline >> x;
-                  tymczasowy.push_back(x);
-              }
-              temp.push_back(tymczasowy);
-          }
+        auto tmax = std::max_element(elem.begin(),elem.end());
+        auto tmin = std::min_element(elem.begin(),elem.end());
+        if(max<*tmax)
+            max=*tmax;
+        if(min>*tmin)
+            min=*tmin;
     }
-    return temp;
+    std::cout<<max<<" "<<min<<std::endl;
+}
+void Obrazy::zad2()
+{
+    int del = 0;
+    for(auto elem : dane_)
+    {
+        int begin = 0;
+        int end = elem.size()-1;
+        for(int i = 0 ; i<=elem.size()/2 ; i++)
+        {
+            if(elem[begin+i]!=elem[end-i])
+            {
+                del++;
+                break;
+            }
+        }
+    }
+    std::cout<<del<<std::endl;
+}
+void Obrazy::zad3()
+{
+    int counter = 0;
+    for(int x = 0 ; x<=200 ; x++)
+    {
+        for(int y = 0; y<=320 ; y++)
+        {
+            if(x>=1 and x<=199 and y>=1 and y<=319)
+            {
+
+                if(dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y+1]>128
+                        or dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y-1]>128)
+                {
+                    counter++;
+                }
+            }
+            else if(x==0)
+            {
+                if(y==0)
+                {
+                    if(dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y+1]>128)
+                    {
+                        counter++;
+                    }
+                }
+                else if(y>0 and y<320)
+                {
+                    if(dane_[x][y]-dane_[x][y-1]>128 or dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y+1]>128)
+                    {
+                        counter++;
+                    }
+                }
+                else if(y==320)
+                {
+                    if(dane_[x][y]-dane_[x+1][y]>128 or dane_[x][y]-dane_[x][y-1]>128)
+                    {
+                        counter++;
+                    }
+                }
+
+            }
+            else if(y==0 and x>0 and x<200)
+            {
+                if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y+1]>128 or dane_[x][y]-dane_[x+1][y]>128)
+                {
+                    counter++;
+                }
+            }
+            else if(y==0 and x==200)
+            {
+                if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y+1]>128)
+                {
+                    counter++;
+                }
+            }
+            else if(x==200)
+            {
+                if(y>0 and y<320)
+                {
+                    if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y+1]>128
+                            or dane_[x][y]-dane_[x][y-1]>128)
+                    {
+                        counter++;
+                    }
+                }
+                else if(y==320)
+                {
+                    if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y-1]>128)//prway dolny
+                    {
+                        counter++;
+                    }
+                }
+            }
+            else if(y==320 and x>0 and x<200)
+            {
+                if(dane_[x][y]-dane_[x-1][y]>128 or dane_[x][y]-dane_[x][y-1]>128 or dane_[x][y]-dane_[x+1][y]>128)//prway kw
+                {
+                    counter++;
+                }
+            }
+
+        }
+
+        std::cout<<counter<<std::endl;
+    }
+
 }
 
-bool FileManager::saveData(const std::string& fileName, const std::vector<DummyData>& dataVec)
-{
-    std::cout << fileName << std::endl;
-    for(const auto& elem : dataVec)
-    {
-        std::cout << elem << std::endl;
-    }
-    return true;
-}
-
-}  // prework
+}// prework

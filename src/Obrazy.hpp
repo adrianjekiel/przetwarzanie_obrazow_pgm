@@ -3,8 +3,8 @@
  * Year 2019
  **/
 
-#ifndef PREWORK_FILE_MANAGER_HPP_
-#define PREWORK_FILE_MANAGER_HPP_
+#ifndef PREWORK_OBRAZY_HPP_
+#define PREWORK_OBRAZY_HPP_
 
 #include <vector>
 #include <string>
@@ -12,20 +12,18 @@
 namespace prework
 {
 
-// forward declaration of DummyData,
-// thanks that we don't need to include here DummyData.hpp
-// just include it in cpp file only,
-// this increase speed time of compilation and represent good style of coding
-class DummyData;
-
-class FileManager
+class Obrazy
 {
 public:
-    std::vector<std::vector<int>> loadData(const std::string& fileName);
-    bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
+    Obrazy(const std::vector<std::vector<int>>& dane);
+    void zad1();
+    void zad2();
+    void zad3();
+private:
+    std::vector<std::vector<int>> dane_;
 };
 
 }  // namespace prework
 
-#endif  // PREWORK_FILE_MANAGER_HPP_
+#endif  // PREWORK_OBRAZY_HPP_
 
