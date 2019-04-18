@@ -17,6 +17,8 @@ class Cezar
 {
 public:
    void zad1();
+   void zad2();
+   void zad3();
 private:
    FileManager menago_;
 };

@@ -29,6 +29,42 @@ void Cezar::zad1()
     }
 
 }
+void Cezar::zad2()
+{
 
+    auto dane = menago_.loadData2("dane_6_2.txt");
+    for(slowo_klucz& elem : dane)
+    {
+        int klucz = elem.klucz%26;
+        for(char& a : elem.slowo)
+        {
+            if(a-klucz<65)//zawijamy    c 68 k 5    a=63 a=68-5  63 + 26 = 89
+            {
+                a=a-klucz+26;
+            }
+            else
+            {
+                a=a-klucz;
+            }
+        }
+        std::cout<<elem.slowo<<std::endl;
+    }
+}
+void Cezar::zad3()
+{
+    auto dane = menago_.loadData3("dane_6_3.txt");
+    for(slowo_szyfrogram& elem : dane)
+    {
+        int core_klucz = std::abs(elem.slowo[0]-elem.szyfrogram[0]);
+        for(int i = 0; i<elem.slowo.size(); i++)
+        {
+          if(std::abs(elem.slowo[i]-elem.szyfrogram[i]) != core_klucz)
+          {
+            std::cout<<elem.slowo<<std::endl;
+            break;
+          }
+        }
+    }
+}
 
 }  // prework
