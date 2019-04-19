@@ -26,8 +26,6 @@ class slowo_szyfrogram
   std::string szyfrogram;
 };
 
-class DummyData;
-
 class FileManager
 {
 public:
@@ -35,8 +33,6 @@ public:
     std::vector<slowo_klucz> loadData2(const std::string& fileName);
     std::vector<slowo_szyfrogram> loadData3(const std::string& fileName);
     bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
-
-
 };
 
 }  // namespace prework
