@@ -15,6 +15,8 @@ void run()
 
     Cezar dupa;
     dupa.zad1();
+    dupa.zad2();
+    dupa.zad3();
     std::cout << "Result will be saved to output.txt file" << std::endl;
    // manager.saveData("output.txt", data);
 }

@@ -11,6 +11,7 @@ void Cezar::zad1()
 {
     int k = 107%(26) ;
     auto dane = menago_.loadData("dane_6_1.txt");
+    int i = 0;
     for(std::string& elem : dane)
     {
         for(char& a : elem)
@@ -25,13 +26,14 @@ void Cezar::zad1()
             }
 
         }
-        std::cout<<elem<<std::endl;
+        std::cout<<"linia: " << i << "szyfr: " << elem << std::endl;
+        i++;
     }
-
+    std::cout<< std::endl;
 }
 void Cezar::zad2()
 {
-
+    int i = 0;
     auto dane = menago_.loadData2("dane_6_2.txt");
     for(slowo_klucz& elem : dane)
     {
@@ -47,8 +49,10 @@ void Cezar::zad2()
                 a=a-klucz;
             }
         }
-        std::cout<<elem.slowo<<std::endl;
+        std::cout<< "linia: " << i << "slowo: " << elem.slowo<<std::endl;
+        i++;
     }
+    std::cout<< std::endl;
 }
 void Cezar::zad3()
 {
@@ -58,11 +62,11 @@ void Cezar::zad3()
         int core_klucz = std::abs(elem.slowo[0]-elem.szyfrogram[0]);
         for(int i = 0; i<elem.slowo.size(); i++)
         {
-          if(std::abs(elem.slowo[i]-elem.szyfrogram[i]) != core_klucz)
-          {
-            std::cout<<elem.slowo<<std::endl;
-            break;
-          }
+            if(std::abs(elem.slowo[i]-elem.szyfrogram[i]) != core_klucz)
+            {
+                std::cout << "poprawnie zakodowane: " << elem.slowo << std::endl;
+                break;
+            }
         }
     }
 }

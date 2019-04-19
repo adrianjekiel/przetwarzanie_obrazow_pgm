@@ -15,7 +15,7 @@ std::vector<std::string> FileManager::loadData(const std::string& fileName)
     std::ifstream input(fileName);
     if(input.is_open())
     {
-        while(std::getline(input, temp))
+        while(input >> temp)
         {
             temp_vec.push_back(temp);
         }
