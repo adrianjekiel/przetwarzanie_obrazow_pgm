@@ -12,17 +12,30 @@
 namespace prework
 {
 
-// forward declaration of DummyData,
-// thanks that we don't need to include here DummyData.hpp
-// just include it in cpp file only,
-// this increase speed time of compilation and represent good style of coding
+class slowo_klucz
+{
+  public:
+  int klucz;
+  std::string slowo;
+};
+
+class slowo_szyfrogram
+{
+  public:
+  std::string slowo;
+  std::string szyfrogram;
+};
+
 class DummyData;
 
 class FileManager
 {
 public:
     std::vector<std::string> loadData(const std::string& fileName);
+    std::vector<slowo_klucz> loadData2(const std::string& fileName);
+    std::vector<slowo_szyfrogram> loadData3(const std::string& fileName);
     bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
+
 
 };
 
