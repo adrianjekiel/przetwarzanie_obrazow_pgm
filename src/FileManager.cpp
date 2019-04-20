@@ -57,14 +57,18 @@ std::vector<slowo_szyfrogram> FileManager::loadData3(const std::string& fileName
     return slowa_szyfrogramy;
 }
 
-bool FileManager::saveData(const std::string& fileName, const std::vector<DummyData>& dataVec)
+void FileManager::saveData(const std::string& numer_zadania ,const std::vector<std::string>& vec)
 {
-    std::cout << fileName << std::endl;
-    for(const auto& elem : dataVec)
+    std::ofstream output("wyniki.txt", std::ios_base::out | std::ios_base::app);
+    if(output.is_open())
     {
-        std::cout << elem << std::endl;
+        output << numer_zadania << std::endl;
+        for(const auto& elem : vec)
+        {
+            output << elem << std::endl;
+        }
+        output.close();
     }
-    return true;
 }
 
 }  // prework

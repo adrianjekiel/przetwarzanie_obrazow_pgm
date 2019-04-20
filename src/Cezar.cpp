@@ -9,6 +9,7 @@ namespace prework
 {
 void Cezar::zad1()
 {
+    std::vector<std::string> to_save;
     int k = 107%(26) ;
     auto dane = menago_.loadData("dane_6_1.txt");
     int i = 0;
@@ -26,14 +27,14 @@ void Cezar::zad1()
             }
 
         }
-        std::cout<<"linia: " << i << "szyfr: " << elem << std::endl;
-        i++;
+        to_save.push_back(elem);
     }
-    std::cout<< std::endl;
+    menago_.saveData("ZADANIE PIERWSZE",to_save);
+
 }
 void Cezar::zad2()
 {
-    int i = 0;
+    std::vector<std::string> to_save;
     auto dane = menago_.loadData2("dane_6_2.txt");
     for(slowo_klucz& elem : dane)
     {
@@ -49,26 +50,27 @@ void Cezar::zad2()
                 a=a-klucz;
             }
         }
-        std::cout<< "linia: " << i << "slowo: " << elem.slowo<<std::endl;
-        i++;
+        to_save.push_back(elem.slowo);
     }
-    std::cout<< std::endl;
+    menago_.saveData("ZADANIE DRUGIE",to_save);
 }
 void Cezar::zad3()
 {
+    std::vector<std::string> to_save;
     auto dane = menago_.loadData3("dane_6_3.txt");
     for(slowo_szyfrogram& elem : dane)
     {
         int core_klucz = std::abs(elem.slowo[0]-elem.szyfrogram[0]);
         for(int i = 0; i<elem.slowo.size(); i++)
         {
-            if(std::abs(elem.slowo[i]-elem.szyfrogram[i]) != core_klucz)
-            {
-                std::cout << "poprawnie zakodowane: " << elem.slowo << std::endl;
-                break;
-            }
+          if(std::abs(elem.slowo[i]-elem.szyfrogram[i]) != core_klucz)
+          {
+            to_save.push_back(elem.slowo);
+            break;
+          }
         }
     }
+    menago_.saveData("ZADANIE TRZECIE",to_save);
 }
 
 }  // prework

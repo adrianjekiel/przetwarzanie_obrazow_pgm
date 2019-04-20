@@ -34,7 +34,7 @@ public:
     std::vector<std::string> loadData(const std::string& fileName);
     std::vector<slowo_klucz> loadData2(const std::string& fileName);
     std::vector<slowo_szyfrogram> loadData3(const std::string& fileName);
-    bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
+    void saveData(const std::string &numer_zadania, const std::vector<std::string>& vec);
 
 
 };
