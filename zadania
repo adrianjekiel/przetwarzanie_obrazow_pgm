@@ -1,0 +1,6 @@
+ Należy napisać program pozwalający na przetwarzanie obrazów cyfrowych. Program ma prezentować użytkownikowi menu, pozwalające na:
+
+    - wybór pliku zawierającego obraz przeznaczony do obróbki,
+    - wykonanie wybranych operacji na obrazie (skalowanie, zamiana formatu obrazu, konturowanie, nakładanie obrazów itp.)
+    - wyświetlenie obrazu (początkowego lub po obróbce) na ekranie, w celu szybkiej weryfikacji wyniku,
+    - zakończenie działania programu.
