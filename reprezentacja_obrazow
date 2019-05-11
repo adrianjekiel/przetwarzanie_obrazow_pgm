@@ -1,0 +1,146 @@
+Reprezentacja obrazu
+Obrazy pobierane z kamery, bądź dowolnego innego źródła, mogą być składowane na pliku dyskowym w jednym z wielu istniejących 
+formatów zapisu obrazów rastrowych. Poniżej omówiono kilka z nich.
+
+Formaty plików pbm
+Przenośny format bitmapowy pbm (portable bitmap) jest to najprostszy format monochromatyczny (z pewnością dużo prostszy od jego 
+opisu:-). Nadaje się on do przechowywania obrazów czarno-białych (sensu stricte, tzn. złożonych jedynie z pikseli czarnych lub 
+białych). W podstawowej wersji tworzony plik jest plikiem tekstowym zawierającym informacje o pojedynczym obrazie. Plik zapisany
+w formacie pbm zawiera w kolejności:
+
+    - ,,Numer magiczny'', określający rodzaj pliku. Numer magiczny najprostszego pliku pbm to dwa pierwsze znaki, ustawione 
+      na ,,P1''.
+    - Co najmniej jeden znak biały (spacja, tabulacja, CR, LF).
+    - Szerokość obrazu (width), podana w pikselach jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Wysokość obrazu (high), znowu podana w pikselach jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Ciąg znaków ,,0'' lub ,,1''. Znak ,,0'' oznacza biel, znak ,,1'' oznacza czerń. Znaki kodują piksele obrazu począwszy od 
+      jego lewego górnego rogu w kierunku zgodnym z kierunkiem normalnego czytania. Znaki białe w tej sekcji są ignorowane.
+    - Cokolwiek zaczynające się od białego znaku -- zostanie to zignorowane.
+    - Linia zawierająca informacje o szerokości obrazu może być poprzedzona liniami komentarza rozpoczynającymi się znakiem 
+      ,,#'' -- linie te są ignorowane.
+
+Oto przykład małej bitmapy w tym formacie:
+
+P1
+# feep.pbm
+24 7
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0
+0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0
+0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 1 0
+0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0
+0 1 0 0 0 0 0 1 1 1 1 0 0 1 1 1 1 0 0 1 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+która definiuje obraz o rozmiarach 24x7 pikseli. 
+Istnieje wariant tego formatu pozwalający na zapisanie informacji o pikselach obrazu w postaci binarnej. 
+Różnice pomiędzy tym formatem a formatem opisanym wcześniej to:
+
+    - ,,Numer magiczny'', to ,,P4'' zamiast ,,P1''.
+    - Po wysokości H dozwolony jest tylko jeden znak biały (zazwyczaj znak nowej linii).
+    - Ciąg W rzędów zawierających po nie mniej niż H bitów, występujący w miejscu ciągu znaków ,,0'' lub ,,1''. 
+      Każdy bit koduje pojedynczy piksel obrazu tak, jak poprzednio robiły to znaki. Bity są zapisywane po osiem na bajt, 
+      w kolejności najpierw bardziej znaczący. Ostatni bajt w każdym rzędzie uzupełniony jest w razie potrzeby bitami 
+      nieznaczącymi. Nie są dopuszczalne w tej sekcji białe znaki.
+    - Plik może zawierać informacje o kilku następujących po sobie obrazach.
+
+Formaty plików pgm
+Przenośny format szarej bitmapy pgm (portable graymap) jest to prosty format monochromatyczny. Nadaje się on do przechowywania
+obrazów zawierających wiele odcieni szarości. W podstawowej wersji tworzony plik jest plikiem tekstowym zawierającym informacje 
+o pojedynczym obrazie. Plik zapisany w formacie pgm zawiera w kolejności:
+
+    - ,,Numer magiczny'', określający rodzaj pliku. Numer magiczny tekstowej wersji pliku pgm to dwa pierwsze znaki, 
+      ustawione na ,,P2''.
+    - Co najmniej jeden znak biały (spacja, tabulacja, CR, LF).
+    - Szerokość obrazu (W), podana w pikselach jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Wysokość obrazu (H), znowu podana w pikselach jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Maksymalna wartość szarości (M), również podana jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Ciąg WxH wartości zawierających się między 0 a M i zapisanych jako liczby dziesiętne w kodzie ASCII odzielone od siebie 
+      białymi znakami. 0 oznacza czerń, M -- biel, pozostałe wartości -- odcienie pośrednie. Wartości kodują piksele obrazu 
+      począwszy od jego lewego górnego rogu w kierunku zgodnym z kierunkiem normalnego czytania.
+    - Linia zawierająca informacje o maksymalnej wartości szarości obrazu może być poprzedzona liniami komentarza 
+      rozpoczynającymi się znakiem ,,#'' -- linie te są ignorowane.
+
+Oto przykład małej bitmapy w tym formacie:
+
+P2
+# feep.pgm
+24 7
+15
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+0  3  3  3  3  0  0  7  7  7  7  0  0 11 11 11 11  0  0 15 15 15 15  0
+0  3  0  0  0  0  0  7  0  0  0  0  0 11  0  0  0  0  0 15  0  0 15  0
+0  3  3  3  0  0  0  7  7  7  0  0  0 11 11 11  0  0  0 15 15 15 15  0
+0  3  0  0  0  0  0  7  0  0  0  0  0 11  0  0  0  0  0 15  0  0  0  0
+0  3  0  0  0  0  0  7  7  7  7  0  0 11 11 11 11  0  0 15  0  0  0  0
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+
+która jak poprzednio definiuje obraz o rozmiarach 24x7 pikseli, zawierający 15 odcieni szarości. I tutaj graficzny układ pliku 
+nie musi odzwierciedlać w żaden sposób układu obrazka (wszystkie liczby mogą być podane w jednej linii, bądź każda liczba może 
+znaleźć się w osobnej linii, czy jakkolwiek inaczej).
+
+Istnieje także wariant tego formatu pozwalający na zapisanie informacji o pikselach obrazu w postaci binarnej. 
+Różnice pomiędzy tym formatem a formatem opisanym wcześniej to:
+
+    - ,,Numer magiczny'', to ,,P5'' zamiast ,,P2''.
+    - Maksymalna wartość szarości musi być mniejsza od 65536.
+    - Po maksymalnej wartości szarości M dozwolony jest tylko jeden znak biały (zazwyczaj znak nowej linii).
+    - Ciąg WxH wartości zawierających się między 0 a M i zapisanych binarnie za pomocą jednego (dla M<256) lub dwóch bajtów 
+      (bardziej znaczący bajt jest pierwszy). Sposób kodowania pikseli jak poprzednio. Nie są dopuszczalne w tej sekcji białe 
+      znaki.
+    - Plik może zawierać informacje o kilku następujących po sobie obrazach.
+
+Formaty plików ppm
+Przenośny format pixmapowy ppm (portable pixmap) jest to prosty format dla obrazów kolorowych. Należy zaznaczyć, że format ten 
+jest wysoce nie efektywny, powoduje tworzenie ogromnych plików, zawierających niejednokrotnie informacje o obrazie, których oko 
+ludzkie w ogóle nie jest w stanie dostrzec. Jednakże prostota tego formatu decyduje o jego stosowaniu. W podstawowej wersji 
+tworzony plik jest plikiem tekstowym zawierającym informacje o pojedynczym obrazie. Plik zapisany w formacie ppm zawiera w 
+kolejności:
+
+    - ,,Numer magiczny'', określający rodzaj pliku. Numer magiczny tekstowej wersji pliku ppm to dwa pierwsze znaki, ustawione 
+      na ,,P3''.
+    - Co najmniej jeden znak biały (spacja, tabulacja, CR, LF).
+    - Szerokość obrazu (W), podana w pikselach jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Wysokość obrazu (H), znowu podana w pikselach jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Maksymalna wartość składowych kolorowych obrazu (M), również podana jako liczba dziesiętna zapisana za pomocą znaków ASCII.
+    - Co najmniej jeden znak biały.
+    - Ciąg  WxH trójek wartości zawierających się między 0 a M i zapisanych jako liczby dziesiętne w kodzie ASCII, 
+      oddzielone od siebie białymi znakami. Kolejne trzy wartości oznaczają poziom składowej czerwonej, zielonej i niebieskiej 
+      dla poszczególnych pikseli. 0 oznacza wyłączenie koloru, M -- jego maksymalne nasycenie. Trójki kodują piksele obrazu 
+      począwszy od jego lewego górnego rogu w kierunku zgodnym z kierunkiem normalnego czytania.
+    - Linia zawierająca informacje o maksymalnej wartości składowych kolorowych obrazu może być poprzedzona liniami komentarza 
+      rozpoczynającymi się znakiem ,,#'' -- linie te są ignorowane.
+
+Oto przykład małej bitmapy w tym formacie:
+
+P3
+# feep.ppm
+4 4
+15
+ 0  0  0    0  0  0    0  0  0   15  0 15
+ 0  0  0    0 15  7    0  0  0    0  0  0
+ 0  0  0    0  0  0    0 15  7    0  0  0
+15  0 15    0  0  0    0  0  0    0  0  0
+
+która definiuje obraz o rozmiarach 4x4 pikseli. Ponownie graficzny układ pliku nie musi odzwierciedlać w żaden sposób układu 
+obrazka (wszystkie liczby mogą być podane w jednej linii, bądź każda liczba może znaleźć się w osobnej linii, czy jakkolwiek 
+inaczej).
+
+Istnieje także wariant tego formatu pozwalający na zapisanie informacji o pikselach obrazu w postaci binarnej. 
+Różnice pomiędzy tym formatem a formatem opisanym wcześniej to:
+
+    - ,,Numer magiczny'', to ,,P6'' zamiast ,,P3''.
+    - Maksymalna wartość składowych kolorowych musi być mniejsza od 65536.
+    - Po maksymalnej wartości składowych kolorowych M dozwolony jest tylko jeden znak biały (zazwyczaj znak nowej linii).
+    - Ciąg WxH trójek zawierających się między 0 a $ M$ i zapisanych binarnie za pomocą jednego (dla M<256) lub dwóch bajtów 
+      (bardziej znaczący bajt jest pierwszy). Sposób kodowania pikseli jak poprzednio. Nie są dopuszczalne w tej sekcji 
+       białe znaki.
+    - Plik może zawierać informacje o kilku następujących po sobie obrazach.
+
