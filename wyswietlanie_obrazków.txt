@@ -1,0 +1,13 @@
+do wysweitlenia obrazka mozemy u¿yæ programu display;
+aby uruchomiæ go z poziomu kodu mozemy u¿yæ funkcji system z nag³ówka:
+#include <stdlib.h>
+
+u¿ycie wymaga zbudowania polecenia
+
+funkcja system przyjmuje char* wiêc trzeba przekonwertowaæ (po prostu string.c_str())
+
+std::string polecenie;
+polecenie = "display" + " " + nazwa_pliku + "&";
+system(polecenie.c_str());
+
+

@@ -1,0 +1,5 @@
+19.05
+
+- zapropobuj format w jakim mog¹ byæ przechowywane obrazki w programie
+- napisz funkcjê wczytuj¹c¹ obrazki wraz z obs³ug¹ b³êdów 
+- napisz funkcjê wyswietlaj¹c¹ obrazki za pomoc¹ programu "display"
