@@ -7,6 +7,10 @@
 
 namespace prework
 {
+Obraz::Obraz()
+{
+
+}
 
 Obraz::Obraz(const std::string magic_number, const int width, const int high):
     magic_number_(magic_number), //nabijanie
@@ -46,6 +50,10 @@ int Obraz::skala() const
 }
 
 std::vector<std::vector<int>>& Obraz::data()
+{
+   return data_;
+}
+std::vector<std::vector<int>> Obraz::data() const
 {
    return data_;
 }

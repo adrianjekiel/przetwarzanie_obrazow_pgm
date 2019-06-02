@@ -5,6 +5,7 @@
 
 #include "FileManager.hpp"
 #include "Obraz.hpp"
+#include <stdlib.h>
 
 namespace prework
 {
@@ -31,6 +32,7 @@ Obraz FileManager::loadData(const std::string& fileName)
             }
             else
             {
+                std::cout << "dupa"<<std::endl;
                 input >> width >> high;
             }
             Obraz load(magic_number, width, high);
@@ -56,6 +58,7 @@ Obraz FileManager::loadData(const std::string& fileName)
             }
             else
             {
+                std::cout << "dupa"<<std::endl;
                 input >> width >> high >> skala;
             }
             Obraz load(magic_number, width, high, skala);
@@ -69,22 +72,50 @@ Obraz FileManager::loadData(const std::string& fileName)
                 }
                 load.data().push_back(wiersz);
             }
+            input.close();
+            std::cout << fileName <<magic_number<<" "<<width<<" "<<high<<" "<<skala<< std::endl;
             return load;
         }
-    input.close();
+
     }
-    std::cout << fileName << std::endl;
+
     return {};
 }
+void FileManager::wyswietl(const std::string &fileName)
+{
+    std::string polecenie;
+    polecenie = std::string("display ") + fileName + "&";
+    system(polecenie.c_str());
 
-//bool FileManager::saveData(const std::string& fileName, const std::vector<DummyData>& dataVec)
-//{
-//    std::cout << fileName << std::endl;
-//    for(const auto& elem : dataVec)
-//    {
-//        std::cout << elem << std::endl;
-//    }
-//    return true;
-//}
+}
+
+void FileManager::saveData(const std::string& fileName, const Obraz& obraz_)
+{
+   std::ofstream output(fileName);
+   if(output.is_open())
+   {
+
+       output << obraz_.magic_number() << std::endl;
+       output << obraz_.width() << " " << obraz_.high() << std::endl;
+       std::cout << obraz_.magic_number() << std::endl;
+       std::cout << obraz_.width() << " " << obraz_.high() << std::endl;
+       if(obraz_.magic_number() == "P2")
+       {
+           output << obraz_.skala() << std::endl;
+           std::cout << obraz_.skala() << std::endl;
+       }
+       for(const auto& wiersz : obraz_.data())
+       {
+           for(const auto& piksel : wiersz)
+           {
+               output << piksel << " ";
+               std::cout << piksel << " ";
+           }
+           output << std::endl;
+       }
+    output.close();
+   }
+
+}
 
 }  // prework

@@ -19,8 +19,10 @@ class FileManager
 {
 public:
     Obraz loadData(const std::string& fileName);
-    //bool saveData(const std::string& fileName, const std::vector<DummyData>& data);
+    void wyswietl(const std::string& fileName);
+    void saveData(const std::string& fileName, const Obraz& obraz_);
 };
+
 
 }  // namespace prework
 

@@ -15,6 +15,7 @@ namespace prework
 
 struct Obraz
 {
+    Obraz();
     Obraz(const std::string magic_number, const int width, const int high);//konstruktor
     //void add_pixel(const int pixel);
     Obraz(const std::string magic_number, const int width, const int high, const int skala);
@@ -24,6 +25,7 @@ struct Obraz
     int high() const;
     int skala() const;
     std::vector<std::vector<int>>& data();
+    std::vector<std::vector<int>> data() const;
 
 private:
     std::string magic_number_;
