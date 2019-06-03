@@ -12,110 +12,85 @@ namespace prework
 
 Obraz FileManager::loadData(const std::string& fileName)
 {
-    std::string magic_number;
-    std::string temp_com;
-    int width;
-    int high;
-    int pixel;
-    int skala;
+    std::string magic_number, temp_com;
+    int width, high, pixel, skala;
     std::ifstream input(fileName);
     if(input.is_open())
     {
         input >> magic_number;
-        if(magic_number == "P1")
+
+        while(temp_com.empty()) // jesli jakims cudem wczytalismy pusta linie to wczytujemy dopoki cos nie bedzie w temp_com
         {
-            input >> temp_com;
-            if(temp_com[0] != '#')
-            {
-                std::stringstream temp_stream(temp_com);
-                temp_stream >> width >> high;
-            }
-            else
-            {
-                std::cout << "dupa"<<std::endl;
-                input >> width >> high;
-            }
-            Obraz load(magic_number, width, high);
-            for(int i = 0 ; i<width; i++)
-            {
-                std::vector<int> wiersz;
-                for(int k =0; k<high ;k++)
-                {
-                    input >> pixel;
-                    wiersz.push_back(pixel);
-                }
-                load.data().push_back(wiersz);
-            }
-            return load;
-        }
-        else if(magic_number == "P2")
-        {
-            input >> temp_com;
-            if(temp_com[0] != '#')
-            {
-                std::stringstream temp_stream(temp_com);
-                temp_stream >> width >> high;
-            }
-            else
-            {
-                std::cout << "dupa"<<std::endl;
-                input >> width >> high >> skala;
-            }
-            Obraz load(magic_number, width, high, skala);
-            for(int i = 0 ; i<width; i++)
-            {
-                std::vector<int> wiersz;
-                for(int k =0; k<high ;k++)
-                {
-                    input >> pixel;
-                    wiersz.push_back(pixel);
-                }
-                load.data().push_back(wiersz);
-            }
-            input.close();
-            std::cout << fileName <<magic_number<<" "<<width<<" "<<high<<" "<<skala<< std::endl;
-            return load;
+            std::getline(input, temp_com); //uzywamy do tego getline, operator >> przekazuje tylko do spacji, nie cala linie, niestety :< to byl blad nasz
         }
 
+        if(temp_com[0] != '#')
+        {
+            std::stringstream temp_stream(temp_com);
+            temp_stream >> width >> high;
+            if (magic_number != "P1") // jesli jest P2 lub P3 to jeszcze wczytaj skale
+                temp_stream >> skala;
+        }
+        else
+        {
+            input >> width >> high;
+            if (magic_number != "P1") // jesli jest P2 lub P3 to jeszcze wczytaj skale
+                input >> skala;
+        }
+
+        Obraz obrazek(magic_number, width, high, skala); //inicjujemy obrazek, w sumie czy skala istnieje czy nie to bez roznicy, dla P1 bedzie skala = 0, (domyslnie int jest inicjalizowany zerem)
+        for(int i = 0 ; i<width; i++)
+        {
+            std::vector<int> wiersz;
+            for(int k =0; k<high ;k++)
+            {
+                input >> pixel;
+                wiersz.push_back(pixel);
+            }
+            obrazek.data().push_back(wiersz);
+        }
+        obrazek.set_fileName(fileName); // ustaw nazwe wczytanego pliku
+        input.close();
+        return obrazek;
     }
-
     return {};
 }
-void FileManager::wyswietl(const std::string &fileName)
+
+void FileManager::wyswietl(const Obraz& obraz)
 {
     std::string polecenie;
-    polecenie = std::string("display ") + fileName + "&";
+    polecenie = std::string("display ") + obraz.fileName() + "&";
     system(polecenie.c_str());
 
 }
 
-void FileManager::saveData(const std::string& fileName, const Obraz& obraz_)
+// funkcja zapisuje obraz do pliku, fileName jest nabijane podczas stosowania filtru
+// budujemy obrazek w ten sam sposob jak wczytywalismy czyli:
+// numer_magiczny
+// szerokosc wysokosc
+// skala
+// wartosci zabarwienia pikseli
+void FileManager::saveData(const Obraz& obraz)
 {
-   std::ofstream output(fileName);
+   std::ofstream output(obraz.fileName());
    if(output.is_open())
    {
-
-       output << obraz_.magic_number() << std::endl;
-       output << obraz_.width() << " " << obraz_.high() << std::endl;
-       std::cout << obraz_.magic_number() << std::endl;
-       std::cout << obraz_.width() << " " << obraz_.high() << std::endl;
-       if(obraz_.magic_number() == "P2")
+       output << obraz.magic_number() << std::endl;
+       output << obraz.width() << " " << obraz.high() << std::endl;
+       if(obraz.magic_number() != "P1") //jesli P2 lub P3 to jeszcze zapisz skale
        {
-           output << obraz_.skala() << std::endl;
-           std::cout << obraz_.skala() << std::endl;
+           output << obraz.skala() << std::endl;
        }
-       for(const auto& wiersz : obraz_.data())
+       for(const auto& wiersz : obraz.data())
        {
            for(const auto& piksel : wiersz)
            {
                output << piksel << " ";
-               std::cout << piksel << " ";
            }
            output << std::endl;
        }
-    output.close();
+       output.close();
    }
-
 }
 
 }  // prework

@@ -7,16 +7,16 @@
 
 namespace prework
 {
-Obraz Filtry::progowanie(const int &procent, Obraz obraz_do_progowania)
+Obraz Filtry::progowanie(const int &procent, Obraz obraz)
 {
-    int prog = (obraz_do_progowania.skala()*procent)/100;
-    for(auto &wiersz : obraz_do_progowania.data())
+    int prog = (obraz.skala()*procent)/100;
+    for(auto &wiersz : obraz.data())
     {
         for(auto &piksel : wiersz)
         {
             if(piksel>prog)
             {
-                piksel=obraz_do_progowania.skala();
+                piksel=obraz.skala();
             }
             else
             {
@@ -24,22 +24,14 @@ Obraz Filtry::progowanie(const int &procent, Obraz obraz_do_progowania)
             }
         }
     }
-    std::cout<<obraz_do_progowania.magic_number()<<" "<<
-               obraz_do_progowania.width()<<" "<<obraz_do_progowania.high()<<" "<<obraz_do_progowania.skala()<<std::endl;
-    for(auto &wiersz : obraz_do_progowania.data())
-    {
-        for(auto &piksel : wiersz)
-        {
-            std::cout << piksel;
-        }
-    }
-    return obraz_do_progowania;
+    obraz.set_fileName("obraz_progowanie.pgm");
+    return obraz;
 }
-Obraz Filtry::zmiana_poziomow(const int &czern_, const int &biel_, Obraz obraz_do_zmiany_poziomow)
+Obraz Filtry::zmiana_poziomow(const int& czern_procent, const int& biel_procent, Obraz obraz)
 {
-    int czern = (obraz_.skala()*czern_)/100;
-    int biel = (obraz_do_zmiany_poziomow.skala()*biel_)/100;
-    for(auto &wiersz : obraz_do_zmiany_poziomow.data())
+    int czern = (obraz.skala()*czern_procent)/100;
+    int biel = (obraz.skala()*biel_procent)/100;
+    for(auto &wiersz : obraz.data())
     {
         for(auto &piksel : wiersz)
         {
@@ -49,15 +41,16 @@ Obraz Filtry::zmiana_poziomow(const int &czern_, const int &biel_, Obraz obraz_d
             }
             else if(piksel >= biel)
             {
-                piksel=obraz_do_zmiany_poziomow.skala();
+                piksel=obraz.skala();
             }
             else
             {
-                piksel = ((piksel - czern)*obraz_do_zmiany_poziomow.skala())/(biel - czern);
+                piksel = ((piksel - czern)*obraz.skala())/(biel - czern);
             }
         }
     }
-    return obraz_do_zmiany_poziomow;
+    obraz.set_fileName("obraz_zmiana_poziomow.pgm");
+    return obraz;
 }
 
 

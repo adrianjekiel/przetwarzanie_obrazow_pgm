@@ -12,14 +12,6 @@ Obraz::Obraz()
 
 }
 
-Obraz::Obraz(const std::string magic_number, const int width, const int high):
-    magic_number_(magic_number), //nabijanie
-    width_(width),
-    high_(high)
-{
-    std::cout << "C-tor" << std::endl;
-}
-
 Obraz::Obraz(const std::string magic_number, const int width, const int high, const int skala):
     magic_number_(magic_number), //nabijanie
     width_(width),
@@ -57,4 +49,15 @@ std::vector<std::vector<int>> Obraz::data() const
 {
    return data_;
 }
+
+void Obraz::set_fileName(const std::string& fileName)
+{
+    fileName_ = fileName;
+}
+
+std::string Obraz::fileName() const
+{
+    return fileName_;
+}
+
 }  // namespace prework

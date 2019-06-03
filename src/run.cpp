@@ -14,16 +14,39 @@ namespace prework
 
 void run()
 {
-    std::string fileName;
-    std::cout << "Please insert file name to process" << std::endl;
-    std::cin >> fileName;
+    // w celach testowych zahardkowana nazwa pliku
+    std::string fileName{"balloons.ascii.pgm"};
+
+    // stworz klase odpowiedzialna za wczytywanie, zapisywanie i wyswietlanie pliku obrazka
     auto manager = prework::FileManager();
-    auto obraz = manager.loadData(fileName);
-    manager.wyswietl(fileName);
+
+    // stworz klase odpowiedzialna za nakladanie filtrow na obrazek
     auto filtry = prework::Filtry();
+
+    // wczytaj obrazek
+    auto obraz = manager.loadData(fileName);
+
+    // wyswietl obrazek za pomoca programu display
+    manager.wyswietl(obraz);
+
+    // naloz filtr progowanie
     auto obraz_po_progowaniu = filtry.progowanie(40, obraz);
-    std::cout << "Result will be saved to output.txt file" << std::endl;
-    manager.saveData("obraz_po_progowaniu.pgm", obraz_po_progowaniu);
+
+    // zapisz obraz po progowaniu
+    manager.saveData(obraz_po_progowaniu);
+
+    // wyswietl obraz po progowaniu
+    manager.wyswietl(obraz_po_progowaniu);
+
+
+    // naloz filtr zmiana poziomow
+    auto obraz_po_zmianie_poziomow = filtry.zmiana_poziomow(10, 70, obraz);
+
+    // zapisz obraz po zmianie poziomow
+    manager.saveData(obraz_po_zmianie_poziomow);
+
+    // wyswietl obraz po zmianie poziomow
+    manager.wyswietl(obraz_po_zmianie_poziomow);
 }
 
 }  // namespace prework

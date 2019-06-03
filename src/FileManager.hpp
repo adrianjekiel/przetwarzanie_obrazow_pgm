@@ -19,8 +19,8 @@ class FileManager
 {
 public:
     Obraz loadData(const std::string& fileName);
-    void wyswietl(const std::string& fileName);
-    void saveData(const std::string& fileName, const Obraz& obraz_);
+    void wyswietl(const Obraz& obraz);
+    void saveData(const Obraz& obraz);
 };
 
 
