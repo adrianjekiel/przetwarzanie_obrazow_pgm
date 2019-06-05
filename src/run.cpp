@@ -47,6 +47,16 @@ void run()
 
     // wyswietl obraz po zmianie poziomow
     manager.wyswietl(obraz_po_zmianie_poziomow);
+
+    // naloz filtr korekcja gamma
+    auto obraz_po_korekcji_gamma = filtry.kor_gamma(1.5, obraz);
+
+    //zapisz obraz po korekcji gamma
+    manager.saveData(obraz_po_korekcji_gamma);
+
+    //wyswietl obraz po korekcji gamma
+    manager.wyswietl(obraz_po_korekcji_gamma);
+
 }
 
 }  // namespace prework

@@ -4,6 +4,7 @@
  **/
 
 #include "Filtry.hpp"
+#include <math.h>
 
 namespace prework
 {
@@ -50,6 +51,18 @@ Obraz Filtry::zmiana_poziomow(const int& czern_procent, const int& biel_procent,
         }
     }
     obraz.set_fileName("obraz_zmiana_poziomow.pgm");
+    return obraz;
+}
+Obraz Filtry::kor_gamma(const int& wartosc, Obraz obraz)
+{
+    for(auto &wiersz : obraz.data())
+    {
+        for(auto &piksel : wiersz)
+        {
+            piksel=(pow(piksel/obraz.skala(),1/wartosc))*obraz.skala();
+        }
+    }
+    obraz.set_fileName("obraz_korekcja_gamma.pgm");
     return obraz;
 }
 
