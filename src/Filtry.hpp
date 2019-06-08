@@ -20,7 +20,8 @@ class Filtry
 public:
     Obraz progowanie(const int& procent, Obraz obraz_do_progowania);
     Obraz zmiana_poziomow(const int& czern, const int& biel, Obraz obraz);
-    Obraz kor_gamma(const int &wartosc, Obraz obraz);
+    Obraz kor_gamma(const double &wartosc, Obraz obraz);
+    Obraz kontur(Obraz obraz);
 
 };
 
