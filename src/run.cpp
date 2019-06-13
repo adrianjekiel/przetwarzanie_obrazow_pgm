@@ -61,10 +61,10 @@ void run()
     auto obraz_po_konturowaniu = filtry.kontur(obraz);
 
     //zapisz obraz po konturowaniu
-    //manager.saveData(obraz_po_konturowaniu);
+    manager.saveData(obraz_po_konturowaniu);
 
     //wyswietl obraz po konturowaniu
-   // manager.wyswietl(obraz_po_konturowaniu);
+    manager.wyswietl(obraz_po_konturowaniu);
 
 }
 

@@ -69,22 +69,17 @@ Obraz Filtry::kor_gamma(const double& wartosc, Obraz obraz)
 Obraz Filtry::kontur(Obraz obraz)
 {
     auto &piksele = obraz.data();
-    for(int wiersz = 0; wiersz<obraz.high();wiersz++)
+    for(int wiersz = 0; wiersz<obraz.width();wiersz++)
     {
-        for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
+        for(int kolumna = 0 ; kolumna<obraz.high(); kolumna++)
         {
-            std::cout<<"dupa1"<<" "<<wiersz<<" "<<kolumna<<std::endl;
-            if(kolumna+1<obraz.width() and wiersz+1<obraz.high())
+            if(kolumna+1<obraz.high() and wiersz+1<obraz.width())
             {
-                auto curr_piksel = piksele[wiersz][kolumna];
-                auto right_piksel = piksele[wiersz][kolumna+1];
-                auto down_piksel = piksele[wiersz+1][kolumna];
-                piksele[wiersz][kolumna]=abs(down_piksel - curr_piksel)+abs(right_piksel-curr_piksel);
+                piksele[wiersz][kolumna]=abs(piksele[wiersz+1][kolumna] - piksele[wiersz][kolumna])+abs(piksele[wiersz][kolumna+1]-piksele[wiersz][kolumna]);
             }
         }
     }
     obraz.set_fileName("obraz_po_konturowaniu.pgm");
-    std::cout<<"dupa2";
     return obraz;
 }
 
