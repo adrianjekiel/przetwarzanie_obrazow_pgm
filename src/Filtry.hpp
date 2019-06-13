@@ -22,6 +22,8 @@ public:
     Obraz zmiana_poziomow(const int& czern, const int& biel, Obraz obraz);
     Obraz kor_gamma(const double &wartosc, Obraz obraz);
     Obraz kontur(Obraz obraz);
+    Obraz rozmycie_poz(Obraz obraz);
+    Obraz rozmycie_pio(Obraz obraz);
 };
 
 

@@ -84,5 +84,41 @@ Obraz Filtry::kontur(Obraz obraz)
     obraz.set_fileName("obraz_po_konturowaniu.pgm");
     return obraz;
 }
+Obraz Filtry::rozmycie_poz(Obraz obraz)
+{
+    double k = 0.33;
+    auto &piksele = obraz.data();
+    for(int wiersz = 0; wiersz<obraz.high();wiersz++)
+    {
+        for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
+        {
+            if(wiersz<obraz.high() and kolumna+1<obraz.width())
+            {
+                piksele[wiersz][kolumna]=k*(double(piksele[wiersz][kolumna-1])+double(piksele[wiersz][kolumna])+double(piksele[wiersz][kolumna+1]));
+            }
+        }
+    }
+
+    obraz.set_fileName("obraz_po_rozmyciu_poziomym.pgm");
+    return obraz;
+}
+Obraz Filtry::rozmycie_pio(Obraz obraz)
+{
+    double k = 0.33;
+    auto &piksele = obraz.data();
+    for(int wiersz = 0; wiersz<obraz.high();wiersz++)
+    {
+        for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
+        {
+            if(wiersz+1<obraz.high() and wiersz>0)
+            {
+                piksele[wiersz][kolumna]=k*(double(piksele[wiersz-1][kolumna])+double(piksele[wiersz][kolumna])+double(piksele[wiersz+1][kolumna]));
+            }
+        }
+    }
+
+    obraz.set_fileName("obraz_po_rozmyciu_pionowym.pgm");
+    return obraz;
+}
 
 }  // namespace prework

@@ -64,6 +64,19 @@ void run()
 
     //wyswietl obraz po konturowaniu
     manager.wyswietl(obraz_po_konturowaniu);
+
+    // naloz filtr rozmycie poziome
+    auto obraz_po_rozmyciu_poziomym = filtry.rozmycie_poz(obraz);
+
+    //zapisz obraz po rozmyciu poziomym
+    manager.saveData(obraz_po_rozmyciu_poziomym);
+
+    //wyswietl obraz po rozmyciu poziomym
+    manager.wyswietl(obraz_po_rozmyciu_poziomym);
+
+    auto obraz_po_rozmyciu_pionowym = filtry.rozmycie_pio(obraz);
+    manager.saveData(obraz_po_rozmyciu_pionowym);
+    manager.wyswietl(obraz_po_rozmyciu_pionowym);
 }
 
 }  // namespace prework
