@@ -39,10 +39,10 @@ Obraz FileManager::loadData(const std::string& fileName)
         }
 
         Obraz obrazek(magic_number, width, high, skala); //inicjujemy obrazek, w sumie czy skala istnieje czy nie to bez roznicy, dla P1 bedzie skala = 0, (domyslnie int jest inicjalizowany zerem)
-        for(int i = 0 ; i<width; i++)
+        for(int i = 0 ; i<high; i++)
         {
             std::vector<int> wiersz;
-            for(int k =0; k<high ;k++)
+            for(int k =0; k<width ;k++)
             {
                 input >> pixel;
                 wiersz.push_back(pixel);

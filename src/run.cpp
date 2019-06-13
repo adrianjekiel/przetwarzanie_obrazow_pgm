@@ -38,7 +38,6 @@ void run()
     // wyswietl obraz po progowaniu
     manager.wyswietl(obraz_po_progowaniu);
 
-
     // naloz filtr zmiana poziomow
     auto obraz_po_zmianie_poziomow = filtry.zmiana_poziomow(10, 70, obraz);
 
@@ -65,7 +64,6 @@ void run()
 
     //wyswietl obraz po konturowaniu
     manager.wyswietl(obraz_po_konturowaniu);
-
 }
 
 }  // namespace prework

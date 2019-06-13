@@ -66,22 +66,23 @@ Obraz Filtry::kor_gamma(const double& wartosc, Obraz obraz)
     obraz.set_fileName("obraz_korekcja_gamma.pgm");
     return obraz;
 }
+
 Obraz Filtry::kontur(Obraz obraz)
 {
     auto &piksele = obraz.data();
-    for(int wiersz = 0; wiersz<obraz.width();wiersz++)
+    for(int wiersz = 0; wiersz<obraz.high();wiersz++)
     {
-        for(int kolumna = 0 ; kolumna<obraz.high(); kolumna++)
+        for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
         {
-            if(kolumna+1<obraz.high() and wiersz+1<obraz.width())
+            if(kolumna+1<obraz.width() and wiersz+1<obraz.high())
             {
                 piksele[wiersz][kolumna]=abs(piksele[wiersz+1][kolumna] - piksele[wiersz][kolumna])+abs(piksele[wiersz][kolumna+1]-piksele[wiersz][kolumna]);
             }
         }
     }
+
     obraz.set_fileName("obraz_po_konturowaniu.pgm");
     return obraz;
 }
-
 
 }  // namespace prework
