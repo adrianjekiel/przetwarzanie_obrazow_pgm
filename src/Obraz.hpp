@@ -25,8 +25,8 @@ struct Obraz
     int high() const;
     int skala() const;
     std::string fileName() const;
-    std::vector<std::vector<int>>& data();
-    std::vector<std::vector<int>> data() const;
+    std::vector<std::vector<std::vector<int>>>& data();
+    std::vector<std::vector<std::vector<int>>> data() const;
 
     // setter do ustawiania nazwy pliku obrazka
     void set_fileName(const std::string& fileName);
@@ -38,7 +38,7 @@ private:
     int width_; // szerokosc
     int high_; // wysokosc
     int skala_; // maxymalny stopien szarosci, przerwaznie 255
-    std::vector<std::vector<int>> data_; // zmienna przechowujaca wartosci nasycenia kolorem poszczegolnych pixeli
+    std::vector<std::vector<std::vector<int>>> data_; // zmienna przechowujaca wartosci nasycenia kolorem poszczegolnych pixeli
 };
 
 

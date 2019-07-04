@@ -41,11 +41,11 @@ int Obraz::skala() const
     return skala_;
 }
 
-std::vector<std::vector<int>>& Obraz::data()
+std::vector<std::vector<std::vector<int>>>& Obraz::data()
 {
    return data_;
 }
-std::vector<std::vector<int>> Obraz::data() const
+std::vector<std::vector<std::vector<int> > > Obraz::data() const
 {
    return data_;
 }

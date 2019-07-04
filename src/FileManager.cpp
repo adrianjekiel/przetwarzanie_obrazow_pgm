@@ -39,16 +39,34 @@ Obraz FileManager::loadData(const std::string& fileName)
         }
 
         Obraz obrazek(magic_number, width, high, skala); //inicjujemy obrazek, w sumie czy skala istnieje czy nie to bez roznicy, dla P1 bedzie skala = 0, (domyslnie int jest inicjalizowany zerem)
-        for(int i = 0 ; i<high; i++)
+        if(obrazek.magic_number()=="P3")
         {
-            std::vector<int> wiersz;
-            for(int k =0; k<width ;k++)
+            for(int i = 0 ; i<high; i++)
             {
-                input >> pixel;
-                wiersz.push_back(pixel);
+                std::vector<std::vector<int>> wiersz;
+                for(int k =0; k<width ;k++)
+                {
+                    int r,g,b;
+                    input >> r >> g >> b;
+                    wiersz.push_back({r,g,b});
+                }
+                obrazek.data().push_back(wiersz);
             }
-            obrazek.data().push_back(wiersz);
         }
+        else
+        {
+            for(int i = 0 ; i<high; i++)
+            {
+                std::vector<std::vector<int>> wiersz;
+                for(int k =0; k<width ;k++)
+                {
+                    input >> pixel;
+                    wiersz.push_back({pixel});
+                }
+                obrazek.data().push_back(wiersz);
+            }
+        }
+
         obrazek.set_fileName(fileName); // ustaw nazwe wczytanego pliku
         input.close();
         return obrazek;
@@ -85,7 +103,10 @@ void FileManager::saveData(const Obraz& obraz)
        {
            for(const auto& piksel : wiersz)
            {
-               output << piksel << " ";
+               for(const auto& skladowa : piksel)
+               {
+                  output << skladowa << " ";
+               }
            }
            output << std::endl;
        }

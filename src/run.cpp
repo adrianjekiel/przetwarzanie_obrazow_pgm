@@ -8,6 +8,7 @@
 #include "FileManager.hpp"
 #include "Obraz.hpp"
 #include "Filtry.hpp"
+#include "Maski.hpp"
 
 namespace prework
 {
@@ -15,13 +16,16 @@ namespace prework
 void run()
 {
     // w celach testowych zahardkowana nazwa pliku
-    std::string fileName{"balloons.ascii.pgm"};
+    std::string fileName{"blackbuck.ascii.ppm"};
 
     // stworz klase odpowiedzialna za wczytywanie, zapisywanie i wyswietlanie pliku obrazka
     auto manager = prework::FileManager();
 
     // stworz klase odpowiedzialna za nakladanie filtrow na obrazek
     auto filtry = prework::Filtry();
+
+    //klasa z maskami
+
 
     // wczytaj obrazek
     auto obraz = manager.loadData(fileName);
@@ -66,7 +70,7 @@ void run()
     manager.wyswietl(obraz_po_konturowaniu);
 
     // naloz filtr rozmycie poziome
-    auto obraz_po_rozmyciu_poziomym = filtry.rozmycie_poz(obraz);
+    auto obraz_po_rozmyciu_poziomym = filtry.rozmycie_poz(obraz,10);
 
     //zapisz obraz po rozmyciu poziomym
     manager.saveData(obraz_po_rozmyciu_poziomym);
@@ -74,9 +78,14 @@ void run()
     //wyswietl obraz po rozmyciu poziomym
     manager.wyswietl(obraz_po_rozmyciu_poziomym);
 
-    auto obraz_po_rozmyciu_pionowym = filtry.rozmycie_pio(obraz);
+    auto obraz_po_rozmyciu_pionowym = filtry.rozmycie_pio(obraz,10);
     manager.saveData(obraz_po_rozmyciu_pionowym);
     manager.wyswietl(obraz_po_rozmyciu_pionowym);
+
+    auto obraz_po_rozciagnieciu_histogramu = filtry.histogram(obraz);
+    manager.saveData(obraz_po_rozciagnieciu_histogramu);
+    manager.wyswietl(obraz_po_rozciagnieciu_histogramu);
+
 }
 
 }  // namespace prework

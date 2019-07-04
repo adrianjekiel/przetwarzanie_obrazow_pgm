@@ -15,14 +15,18 @@ Obraz Filtry::progowanie(const int &procent, Obraz obraz)
     {
         for(auto &piksel : wiersz)
         {
-            if(piksel>prog)
+            for( auto &color : piksel)
             {
-                piksel=obraz.skala();
+                if(color>prog)
+                {
+                    color=obraz.skala();
+                }
+                else
+                {
+                    color=0;
+                }
             }
-            else
-            {
-                piksel=0;
-            }
+
         }
     }
     obraz.set_fileName("obraz_progowanie.pgm");
@@ -36,17 +40,20 @@ Obraz Filtry::zmiana_poziomow(const int& czern_procent, const int& biel_procent,
     {
         for(auto &piksel : wiersz)
         {
-            if(piksel<=czern)
+            for( auto &color : piksel)
             {
-                piksel=0;
-            }
-            else if(piksel >= biel)
-            {
-                piksel=obraz.skala();
-            }
-            else
-            {
-                piksel = ((piksel - czern)*obraz.skala())/(biel - czern);
+                if(color<=czern)
+                {
+                    color=0;
+                }
+                else if(color >= biel)
+                {
+                    color=obraz.skala();
+                }
+                else
+                {
+                    color = ((color - czern)*obraz.skala())/(biel - czern);
+                }
             }
         }
     }
@@ -60,7 +67,10 @@ Obraz Filtry::kor_gamma(const double& wartosc, Obraz obraz)
     {
         for(auto &piksel : wiersz)
         {
-            piksel=(pow(double(piksel)/d_skala,1/wartosc))*d_skala;
+            for( auto &color : piksel)
+            {
+              color=(pow(double(color)/d_skala,1/wartosc))*d_skala;
+            }
         }
     }
     obraz.set_fileName("obraz_korekcja_gamma.pgm");
@@ -74,17 +84,21 @@ Obraz Filtry::kontur(Obraz obraz)
     {
         for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
         {
-            if(kolumna+1<obraz.width() and wiersz+1<obraz.high())
+            for(int color = 0; color<piksele[wiersz][kolumna].size(); color++)
             {
-                piksele[wiersz][kolumna]=abs(piksele[wiersz+1][kolumna] - piksele[wiersz][kolumna])+abs(piksele[wiersz][kolumna+1]-piksele[wiersz][kolumna]);
+                if(kolumna+1<obraz.width() and wiersz+1<obraz.high())
+                {
+                    piksele[wiersz][kolumna][color]=abs(piksele[wiersz+1][kolumna][color] - piksele[wiersz][kolumna][color])+abs(piksele[wiersz][kolumna+1][color]-piksele[wiersz][kolumna][color]);
+                }
             }
+
         }
     }
 
     obraz.set_fileName("obraz_po_konturowaniu.pgm");
     return obraz;
 }
-Obraz Filtry::rozmycie_poz(Obraz obraz)
+Obraz Filtry::rozmycie_poz(Obraz obraz,const int r)
 {
     double k = 0.33;
     auto &piksele = obraz.data();
@@ -92,17 +106,21 @@ Obraz Filtry::rozmycie_poz(Obraz obraz)
     {
         for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
         {
-            if(wiersz<obraz.high() and kolumna+1<obraz.width())
+            for(int color = 0; color<piksele[wiersz][kolumna].size(); color++)
             {
-                piksele[wiersz][kolumna]=k*(double(piksele[wiersz][kolumna-1])+double(piksele[wiersz][kolumna])+double(piksele[wiersz][kolumna+1]));
+                if(kolumna+r<obraz.width() and kolumna-r>=0)
+                {
+                    piksele[wiersz][kolumna][color]=k*(double(piksele[wiersz][kolumna-r][color])+double(piksele[wiersz][kolumna][color])+double(piksele[wiersz][kolumna+r][color]));
+                }
             }
+
         }
     }
 
     obraz.set_fileName("obraz_po_rozmyciu_poziomym.pgm");
     return obraz;
 }
-Obraz Filtry::rozmycie_pio(Obraz obraz)
+Obraz Filtry::rozmycie_pio(Obraz obraz, const int r)
 {
     double k = 0.33;
     auto &piksele = obraz.data();
@@ -110,14 +128,51 @@ Obraz Filtry::rozmycie_pio(Obraz obraz)
     {
         for(int kolumna = 0 ; kolumna<obraz.width(); kolumna++)
         {
-            if(wiersz+1<obraz.high() and wiersz>0)
+            for(int color = 0; color<piksele[wiersz][kolumna].size(); color++)
             {
-                piksele[wiersz][kolumna]=k*(double(piksele[wiersz-1][kolumna])+double(piksele[wiersz][kolumna])+double(piksele[wiersz+1][kolumna]));
+                if(wiersz+r<obraz.high() and wiersz-r>=0)
+                {
+                    piksele[wiersz][kolumna][color]=k*(double(piksele[wiersz-r][kolumna][color])+double(piksele[wiersz][kolumna][color])+double(piksele[wiersz+r][kolumna][color]));
+                }
             }
         }
     }
 
     obraz.set_fileName("obraz_po_rozmyciu_pionowym.pgm");
+    return obraz;
+}
+Obraz Filtry::histogram(Obraz obraz)
+{
+    std::vector<int> min_pixels = obraz.data()[0][0];
+    std::vector<int> max_pixels = obraz.data()[0][0];
+    for(auto &wiersz : obraz.data())
+    {
+        for(auto &piksel : wiersz)
+        {
+            for(int color = 0; color<piksel.size(); color++)
+            {
+                if(min_pixels[color]>piksel[color])
+                {
+                    min_pixels[color]=piksel[color];
+                }
+                if(max_pixels[color]<piksel[color])
+                {
+                    max_pixels[color]=piksel[color];
+                }
+            }
+        }
+    }
+    for(auto &wiersz : obraz.data())
+    {
+        for(auto &piksel : wiersz)
+        {
+            for(int color = 0; color<piksel.size(); color++)
+            {
+             piksel[color]=(piksel[color] - min_pixels[color])*(obraz.skala()/(max_pixels[color]-min_pixels[color]));
+            }
+        }
+    }
+    obraz.set_fileName("obraz_po_rozciagnieciu_histogramu.pgm");
     return obraz;
 }
 
