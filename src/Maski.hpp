@@ -19,8 +19,10 @@ namespace prework
 class Maski
 {
 public:
-    Maski(std::map<std::string, std::vector<int>>);
+    Maski();
     std::vector<int> get_mask(std::string mask_name);
+private:
+    std::map<std::string, std::vector<int>> maski_;
 };
 
 
