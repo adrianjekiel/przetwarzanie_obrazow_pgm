@@ -24,9 +24,6 @@ void run()
     // stworz klase odpowiedzialna za nakladanie filtrow na obrazek
     auto filtry = prework::Filtry();
 
-    //klasa z maskami
-
-
     // wczytaj obrazek
     auto obraz = manager.loadData(fileName);
 
@@ -85,6 +82,10 @@ void run()
     auto obraz_po_rozciagnieciu_histogramu = filtry.histogram(obraz);
     manager.saveData(obraz_po_rozciagnieciu_histogramu);
     manager.wyswietl(obraz_po_rozciagnieciu_histogramu);
+
+    auto obraz_po_filtrze_prewitta = filtry.splot("maska_Prewitta",obraz);
+    manager.saveData(obraz_po_filtrze_prewitta);
+    manager.wyswietl(obraz_po_filtrze_prewitta);
 
 }
 

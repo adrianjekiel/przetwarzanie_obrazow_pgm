@@ -5,6 +5,8 @@
 
 #include "Filtry.hpp"
 #include <math.h>
+#include "Maski.hpp"
+#include <numeric>
 
 namespace prework
 {
@@ -143,11 +145,98 @@ Obraz Filtry::rozmycie_pio(Obraz obraz, const int r)
 }
 Obraz Filtry::histogram(Obraz obraz)
 {
-    std::vector<int> min_pixels = obraz.data()[0][0];
-    std::vector<int> max_pixels = obraz.data()[0][0];
+   auto mi_max = min_max(obraz);
+   auto min_pixels = mi_max.first;
+   auto max_pixels = mi_max.second;
     for(auto &wiersz : obraz.data())
     {
         for(auto &piksel : wiersz)
+        {
+            for(int color = 0; color<piksel.size(); color++)
+            {
+             piksel[color]=(piksel[color] - min_pixels[color])*(obraz.skala()/(max_pixels[color]-min_pixels[color]));
+            }
+        }
+    }
+    obraz.set_fileName("obraz_po_rozciagnieciu_histogramu.pgm");
+    return obraz;
+}
+Obraz Filtry::splot(const std::string &maska, Obraz obraz)
+{
+    Maski maski;
+    auto wspolczyniki = maski.get_mask(maska);
+    auto &piksele = obraz.data();
+    for(int wiersz = 1; wiersz<obraz.high()-1;wiersz++)
+    {
+        for(int kolumna = 1 ; kolumna<obraz.width()-1; kolumna++)
+        {
+            for(int color = 0; color<piksele[wiersz][kolumna].size(); color++)
+            {
+                piksele[wiersz][kolumna][color]=
+                        piksele[wiersz-1][kolumna-1][color]*wspolczyniki[0]+
+                        piksele[wiersz-1][kolumna][color]*wspolczyniki[1]+
+                        piksele[wiersz-1][kolumna+1][color]*wspolczyniki[2]+
+                        piksele[wiersz][kolumna-1][color]*wspolczyniki[3]+
+                        piksele[wiersz][kolumna][color]*wspolczyniki[4]+
+                        piksele[wiersz][kolumna+1][color]*wspolczyniki[5]+
+                        piksele[wiersz+1][kolumna-1][color]*wspolczyniki[6]+
+                        piksele[wiersz+1][kolumna][color]*wspolczyniki[7]+
+                        piksele[wiersz+1][kolumna+1][color]*wspolczyniki[8];
+            }
+        }
+    }
+    if(are_negative_coefficients(wspolczyniki))
+    {
+        int suma = std::accumulate(wspolczyniki.begin(),wspolczyniki.end(),0);
+        for(auto &wiersz : obraz.data())
+        {
+            for(auto &piksel : wiersz)
+            {
+                for( auto &color : piksel)
+                {
+                  color=color/suma;
+                }
+            }
+        }
+    }
+    else
+    {
+        auto mi_max = min_max(obraz);
+        auto min_pixels = mi_max.first;
+        auto max_pixels = mi_max.second;
+        for(auto &wiersz : obraz.data())
+        {
+            for(auto &piksel : wiersz)
+            {
+                for(int color=0;color<piksel.size(); color++)
+                {
+                  piksel[color]=((piksel[color]-min_pixels[color])*obraz.skala())/(max_pixels[color]-min_pixels[color]);
+                }
+            }
+        }
+    }
+    obraz.set_fileName(std::string("obraz_po_filtrze") + maska + std::string(".pgm"));
+    return obraz;
+
+
+}
+bool Filtry::are_negative_coefficients(const std::vector<int>& wspolczyniki)
+{
+    for(const auto& wspol: wspolczyniki)
+    {
+        if(wspol<0)
+            return true;
+    }
+    return false;
+}
+
+std::pair<std::vector<int>, std::vector<int>> Filtry::min_max(const Obraz& obraz)
+{
+    std::vector<int> min_pixels = obraz.data()[0][0];
+    std::vector<int> max_pixels = obraz.data()[0][0];
+    for(const auto &wiersz : obraz.data())
+    {
+        for(const auto &piksel : wiersz)
         {
             for(int color = 0; color<piksel.size(); color++)
             {
@@ -162,18 +251,7 @@ Obraz Filtry::histogram(Obraz obraz)
             }
         }
     }
-    for(auto &wiersz : obraz.data())
-    {
-        for(auto &piksel : wiersz)
-        {
-            for(int color = 0; color<piksel.size(); color++)
-            {
-             piksel[color]=(piksel[color] - min_pixels[color])*(obraz.skala()/(max_pixels[color]-min_pixels[color]));
-            }
-        }
-    }
-    obraz.set_fileName("obraz_po_rozciagnieciu_histogramu.pgm");
-    return obraz;
+    return std::make_pair(min_pixels,max_pixels);
 }
 
 }  // namespace prework
