@@ -187,39 +187,48 @@ Obraz Filtry::splot(const std::string &maska, Obraz obraz)
     }
     if(are_negative_coefficients(wspolczyniki))
     {
-        int suma = std::accumulate(wspolczyniki.begin(),wspolczyniki.end(),0);
-        for(auto &wiersz : obraz.data())
-        {
-            for(auto &piksel : wiersz)
-            {
-                for( auto &color : piksel)
-                {
-                  color=color/suma;
-                }
-            }
-        }
+        normalize_negative(obraz, wspolczynniki);
     }
     else
     {
-        auto mi_max = min_max(obraz);
-        auto min_pixels = mi_max.first;
-        auto max_pixels = mi_max.second;
-        for(auto &wiersz : obraz.data())
-        {
-            for(auto &piksel : wiersz)
-            {
-                for(int color=0;color<piksel.size(); color++)
-                {
-                  piksel[color]=((piksel[color]-min_pixels[color])*obraz.skala())/(max_pixels[color]-min_pixels[color]);
-                }
-            }
-        }
+        normalize_positive(obraz, wspolczynniki);
     }
     obraz.set_fileName(std::string("obraz_po_filtrze") + maska + std::string(".pgm"));
     return obraz;
-
-
 }
+    
+void Filtry::normalize_positive(Obraz& obraz, const std::vector<int>& wspolczynniki)
+{
+    int suma = std::accumulate(wspolczyniki.begin(),wspolczyniki.end(),0);
+    for(auto &wiersz : obraz.data())
+    {
+        for(auto &piksel : wiersz)
+        {
+            for( auto &color : piksel)
+            {
+              color=color/suma;
+            }
+        }
+    }    
+}
+    
+void Filtry::normalize_negative(Obraz& obraz, const std::vector<int>& wspolczynniki)
+{
+    auto mi_max = min_max(obraz);
+    auto min_pixels = mi_max.first;
+    auto max_pixels = mi_max.second;
+    for(auto &wiersz : obraz.data())
+    {
+        for(auto &piksel : wiersz)
+        {
+            for(int color=0;color<piksel.size(); color++)
+            {
+              piksel[color]=((piksel[color]-min_pixels[color])*obraz.skala())/(max_pixels[color]-min_pixels[color]);
+            }
+        }
+    } 
+}
+    
 bool Filtry::are_negative_coefficients(const std::vector<int>& wspolczyniki)
 {
     for(const auto& wspol: wspolczyniki)
