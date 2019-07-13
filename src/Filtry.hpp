@@ -29,6 +29,8 @@ public:
 private:
     bool are_negative_coefficients(const std::vector<int>&);
     std::pair<std::vector<int>, std::vector<int>> min_max (const Obraz& obraz);
+    void normalize_positive(Obraz& obraz, const std::vector<int>& wspolczynniki);
+    void normalize_negative(Obraz& obraz, const std::vector<int>& wspolczynniki);
 };
 
 
