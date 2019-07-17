@@ -76,9 +76,19 @@ Obraz FileManager::loadData(const std::string& fileName)
 
 void FileManager::wyswietl(const Obraz& obraz)
 {
-    std::string polecenie;
-    polecenie = std::string("display ") + obraz.fileName() + "&";
-    system(polecenie.c_str());
+    std::fstream input(obraz.fileName());
+    if(input.is_open())
+    {
+       std::string polecenie;
+       input.close();
+       polecenie = std::string("display ") + obraz.fileName() + "&";
+       system(polecenie.c_str());
+
+    }
+    else
+    {
+        std::cout<<"Nie mozna wykonac funkcji wyswietl bez wczescniejszego zapisania obrazu po filtrze "<<std::endl;
+    }
 
 }
 

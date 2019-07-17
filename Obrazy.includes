@@ -1,0 +1,10 @@
+build/googletest-src/googlemock/include/gmock
+build/googletest-src/googlemock/include/gmock/internal
+build/googletest-src/googlemock/include/gmock/internal/custom
+build/googletest-src/googlemock/test
+build/googletest-src/googletest/include/gtest
+build/googletest-src/googletest/include/gtest/internal
+build/googletest-src/googletest/include/gtest/internal/custom
+build/googletest-src/googletest/samples
+build/googletest-src/googletest/src
+build/googletest-src/googletest/test

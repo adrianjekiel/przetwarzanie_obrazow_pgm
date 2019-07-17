@@ -22,7 +22,15 @@ Maski::Maski()
 }
 std::vector<int> Maski::get_mask(std::string mask_name)
 {
-    return maski_[mask_name];
+    if(maski_.count(mask_name)== 1)
+    {
+      return maski_[mask_name];
+    }
+    else
+    {
+     std::cout<<"nie ma takiej maski : "<<mask_name<<std::endl;
+     return {};
+    }
 }
 
 

@@ -165,7 +165,13 @@ Obraz Filtry::splot(const std::string &maska, Obraz obraz)
 {
     Maski maski;
     auto wspolczyniki = maski.get_mask(maska);
+    if(wspolczyniki.empty())
+    {
+        std::cout<<"brak wspolczynikow"<<std::endl;
+        return obraz;
+    }
     auto &piksele = obraz.data();
+    auto piksele_c = obraz.data();
     for(int wiersz = 1; wiersz<obraz.high()-1;wiersz++)
     {
         for(int kolumna = 1 ; kolumna<obraz.width()-1; kolumna++)
@@ -173,31 +179,32 @@ Obraz Filtry::splot(const std::string &maska, Obraz obraz)
             for(int color = 0; color<piksele[wiersz][kolumna].size(); color++)
             {
                 piksele[wiersz][kolumna][color]=
-                        piksele[wiersz-1][kolumna-1][color]*wspolczyniki[0]+
-                        piksele[wiersz-1][kolumna][color]*wspolczyniki[1]+
-                        piksele[wiersz-1][kolumna+1][color]*wspolczyniki[2]+
-                        piksele[wiersz][kolumna-1][color]*wspolczyniki[3]+
-                        piksele[wiersz][kolumna][color]*wspolczyniki[4]+
-                        piksele[wiersz][kolumna+1][color]*wspolczyniki[5]+
-                        piksele[wiersz+1][kolumna-1][color]*wspolczyniki[6]+
-                        piksele[wiersz+1][kolumna][color]*wspolczyniki[7]+
-                        piksele[wiersz+1][kolumna+1][color]*wspolczyniki[8];
+                        piksele_c[wiersz-1][kolumna-1][color]*wspolczyniki[0]+
+                        piksele_c[wiersz-1][kolumna][color]*wspolczyniki[1]+
+                        piksele_c[wiersz-1][kolumna+1][color]*wspolczyniki[2]+
+                        piksele_c[wiersz][kolumna-1][color]*wspolczyniki[3]+
+                        piksele_c[wiersz][kolumna][color]*wspolczyniki[4]+
+                        piksele_c[wiersz][kolumna+1][color]*wspolczyniki[5]+
+                        piksele_c[wiersz+1][kolumna-1][color]*wspolczyniki[6]+
+                        piksele_c[wiersz+1][kolumna][color]*wspolczyniki[7]+
+                        piksele_c[wiersz+1][kolumna+1][color]*wspolczyniki[8];
             }
         }
     }
     if(are_negative_coefficients(wspolczyniki))
     {
-        normalize_negative(obraz, wspolczynniki);
+        normalize_negative(obraz, wspolczyniki);
     }
     else
     {
-        normalize_positive(obraz, wspolczynniki);
+
+        normalize_positive(obraz, wspolczyniki);
     }
     obraz.set_fileName(std::string("obraz_po_filtrze") + maska + std::string(".pgm"));
     return obraz;
 }
     
-void Filtry::normalize_positive(Obraz& obraz, const std::vector<int>& wspolczynniki)
+void Filtry::normalize_positive(Obraz& obraz, const std::vector<int>& wspolczyniki)
 {
     int suma = std::accumulate(wspolczyniki.begin(),wspolczyniki.end(),0);
     for(auto &wiersz : obraz.data())
@@ -212,7 +219,7 @@ void Filtry::normalize_positive(Obraz& obraz, const std::vector<int>& wspolczynn
     }    
 }
     
-void Filtry::normalize_negative(Obraz& obraz, const std::vector<int>& wspolczynniki)
+void Filtry::normalize_negative(Obraz& obraz, const std::vector<int>& wspolczyniki)
 {
     auto mi_max = min_max(obraz);
     auto min_pixels = mi_max.first;
