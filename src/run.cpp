@@ -14,27 +14,27 @@ namespace prework
 {
 
 
-void wczytaj_obraz()
+Obraz wczytaj_obraz(FileManager& manager)
 {
-    auto manager = prework::FileManager();
     std::string fileName;
     std::cout<<"Podaj nazwe pliku .."<<std::endl;
     std::cin>>fileName;
-    auto obraz = manager.loadData(fileName);
+    return manager.loadData(fileName);
 }
 
-void zapisz_obraz (Obraz obraz)
-{
-    auto manager = prework::FileManager();
-    manager.saveData(obraz);
-}
 
-void menu_numer_dwa(Obraz obraz)
+void menu_numer_dwa(Obraz& obraz, Filtry& filtry)
 {
-    auto filtry = prework::Filtry();
     int wybor;
     do{
         std::cout<<"Podaj wybor dla drugiego menu.."<<std::endl;
+        std::cout<<"1. progowanie"<<std::endl;
+        std::cout<<"2. zmiana poziomow"<<std::endl;
+        std::cout<<"3. korekcja gamma "<<std::endl;
+        std::cout<<"4. konturowanie"<<std::endl;
+        std::cout<<"5. rozmycie poziome"<<std::endl;
+        std::cout<<"6. rozmycie pionowe"<<std::endl;
+        std::cout<<"7. histogram"<<std::endl;
         std::cin>>wybor;
         switch (wybor)
         {
@@ -57,7 +57,7 @@ void menu_numer_dwa(Obraz obraz)
         }
         case 3: {
                 int z;
-                std::cout<<"Zmiana poziomow. Podaj wspolczyniki.."<<std::endl;
+                std::cout<<"Korekcja gamma. Podaj wspolczyniki.."<<std::endl;
                 std::cin>>z;
                 auto obraz_po_korekcji_gamma = filtry.kor_gamma(z, obraz);
                 obraz = obraz_po_korekcji_gamma;
@@ -99,9 +99,8 @@ void menu_numer_dwa(Obraz obraz)
     } while (wybor != 0);
 }
 
-void menu_numer_trzy(Obraz obraz)
+void menu_numer_trzy(Obraz& obraz, Filtry& filtry)
 {
-    auto filtry = prework::Filtry();
     int wybor;
     do{
         std::cout<<"Podaj wybor dla trzeciego menu.."<<std::endl;
@@ -155,7 +154,7 @@ void run()
 {
     Obraz obraz;
     auto manager = prework::FileManager();
-    //auto filtry = prework::Filtry();
+    auto filtry = prework::Filtry();
 
     int wybor;
     do{
@@ -171,16 +170,17 @@ void run()
         switch (wybor)
         {
         case 1:{
-            wczytaj_obraz();
+            obraz = wczytaj_obraz(manager);
+            std::cout<<obraz.high()<<" "<<obraz.width()<<std::endl;
             break;}
         case 2:{
-            menu_numer_dwa(obraz);
+            menu_numer_dwa(obraz, filtry);
             break;}
         case 3:{
-            menu_numer_trzy(obraz);
+            menu_numer_trzy(obraz, filtry);
             break;}
         case 4:{
-            zapisz_obraz(obraz);
+            manager.saveData(obraz);
             break;}
         case 5:{
             manager.wyswietl(obraz);
