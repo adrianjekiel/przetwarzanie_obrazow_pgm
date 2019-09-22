@@ -6,7 +6,7 @@
 #include <iostream>
 #include "run.hpp"
 #include "FileManager.hpp"
-#include "Sygnaly.hpp"
+#include "Liczby.hpp"
 
 namespace prework
 {
@@ -18,10 +18,8 @@ void run()
     std::cin >> fileName;
     auto manager = prework::FileManager();
     auto data = manager.loadData(fileName);
-    auto sygnaly = Sygnaly(data);
-    sygnaly.zad1();
-    sygnaly.zad2();
-    sygnaly.zad3();
+    auto liczby = Liczby(data);
+
     std::cout << "Result will be saved to output.txt file" << std::endl;
     manager.saveData("output.txt", data);
 }

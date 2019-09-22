@@ -9,13 +9,23 @@
 namespace prework
 {
 
-std::vector<std::string> FileManager::loadData(const std::string& fileName) //file name nazwa istniejocego pliku
+std::vector<int> FileManager::loadData(const std::string& fileName) //file name nazwa istniejocego pliku
 {
-    std::vector<std::string> string_vec;
-    return string_vec;
+    std::vector<int> int_vec;
+    std::ifstream input(fileName);
+    if(input.is_open())
+    {
+        int temp;
+        while(input >> temp)
+        {
+            int_vec.push_back(temp);
+        }
+        input.close();
+    }
+    return int_vec;
 }
 
-bool FileManager::saveData(const std::string& fileName,const std::vector<std::string>& string_vec)
+bool FileManager::saveData(const std::string& fileName,const std::vector<int>& string_vec)
 {
     return true;
 }
