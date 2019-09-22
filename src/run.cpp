@@ -6,7 +6,6 @@
 #include <iostream>
 #include "run.hpp"
 #include "FileManager.hpp"
-#include "DummyData.hpp"
 #include "Sygnaly.hpp"
 
 namespace prework

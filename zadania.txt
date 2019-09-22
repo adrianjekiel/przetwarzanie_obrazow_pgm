@@ -1,7 +1,0 @@
-wczytaj plik sygnaly.txt, zawiera on tylko du¿e znaki
-
-zad 1. zlczajac 10 litere co 40-tego slowa otrzymamy pewnie zdanie, wypisz je
-
-zad 2. znajdz slowo w którym znajduje siê najwiêksza liczba róznych liter, wypisz slowo oraz ilosc liter
-
-zad 3. wypisz wszystkie slowa w których litery sa od siebie oddalone w alfabecie o mniej niz 10. kolejno wypisywania powinna byc taka sama jak w przypadku pliku sygnaly.txt
