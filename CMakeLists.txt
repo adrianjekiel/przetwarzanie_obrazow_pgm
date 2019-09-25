@@ -6,7 +6,4 @@ set(CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 add_subdirectory(src)
 include(CTest)
-if(BUILD_TESTING)
-    include(googletest-download)
-    add_subdirectory(test)
-endif()
+
