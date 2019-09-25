@@ -18,7 +18,11 @@ class Liczby
 public:
     Liczby(const std::vector<int>& vecLiczby);
     void zad1();
+    void zad2();
 private:
+    int silnia(int);
+    int oblicz_sume(int);
+    std::vector<string> convertToString();
     std::vector<int> vecLiczby_;
 
 

@@ -25,12 +25,17 @@ void Liczby::zad1()
 }
 void Liczby::zad2()
 {
-    for(auto elem:convertToString())
+    for(auto elem : convertToString())//elem = string  convert to stering = vector
     {
-
+        int liczba = olbicz_sume(elem);//suma si;m
+        int temp_liczba = std::to_int(elem);//z stringa w int
+        if(temp_liczba==liczba)
+        {
+            std::cout<<elem<<std::endl;
+        }
     }
 }
-int Liczby::silnia (int liczba)
+int Liczby::silnia (int liczba)//tylko int
 {
     if(liczba==0)
     {
@@ -41,6 +46,17 @@ int Liczby::silnia (int liczba)
       return liczba* silnia(liczba-1);
     }
 
+}
+
+int Liczby::oblicz_sume (std::string liczba)
+{
+    int suma = 0;
+    for(auto cyfry : liczba)//po charach w stringu
+    {
+        int int_liczba = std::to_int(cyfry);//robimy z chara inta by obliczcyc silnie
+        suma += silnia(int_liczba);//suma silni tej liczby.
+    }
+    return suma;
 }
 
 
