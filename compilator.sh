@@ -7,9 +7,9 @@ echo "start"
 cd $PROJECT_DIR
 
 case $1 in
-        "configure") mkdir build && cd "build" && cmake ..;;
+        "configure") mkdir -p build && cd "build" && cmake ..;;
         "clean") cd "build" && make clean;;
-        "rebuild") cd "build" && make install;;
+        "rebuild") cd "build" && make all;;
         "ut") cd "build" && make install && make test;;
         "remove") rm -rf "build";;
 esac
