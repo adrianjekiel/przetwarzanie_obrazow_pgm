@@ -6,7 +6,3 @@ set(CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 add_subdirectory(src)
 include(CTest)
-<<<<<<< HEAD
-
-=======
->>>>>>> 41a17cd724b1d6c7beb2e8daddb9a620a3e44f10
