@@ -19,9 +19,11 @@ void run()
     auto manager = prework::FileManager();
     auto data = manager.loadData(fileName);
     auto liczby = Liczby(data);
+    liczby.zad1();
+    liczby.zad2();
 
     std::cout << "Result will be saved to output.txt file" << std::endl;
-    manager.saveData("output.txt", data);
+    //manager.saveData("output.txt", data);
 }
 
 }  // namespace prework

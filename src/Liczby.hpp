@@ -19,10 +19,12 @@ public:
     Liczby(const std::vector<int>& vecLiczby);
     void zad1();
     void zad2();
+    void zad3();
+    int nwd(int,int);
 private:
     int silnia(int);
-    int oblicz_sume(int);
-    std::vector<string> convertToString();
+    int oblicz_sume(std::string);
+    std::vector<std::string> convertToString();
     std::vector<int> vecLiczby_;
 
 
