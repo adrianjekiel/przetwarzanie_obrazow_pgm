@@ -25,9 +25,18 @@ std::vector<int> FileManager::loadData(const std::string& fileName) //file name 
     return int_vec;
 }
 
-bool FileManager::saveData(const std::string& fileName,const std::vector<int>& string_vec)
+void FileManager::saveData(const std::string& fileName,const std::vector<std::string>& string_vec)
 {
-    return true;
+    std::ofstream output(fileName); //ofstream o - output , zapisywanie. ifstream i - input odczytywanie
+    if(output.is_open())
+    {
+        for(auto s:string_vec)
+        {
+            output << s <<std::endl;
+        }
+        output.close();
+    }
+
 }
 
 }  // prework

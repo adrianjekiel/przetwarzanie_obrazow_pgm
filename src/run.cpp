@@ -19,11 +19,13 @@ void run()
     auto manager = prework::FileManager();
     auto data = manager.loadData(fileName);
     auto liczby = Liczby(data);
-    liczby.zad1();
-    liczby.zad2();
+    std::string wynik_zad1 = liczby.zad1();
+    std::string wynik_zad2 = liczby.zad2();
+    std::string wynik_zad3 = liczby.zad3();
+    std::vector<std::string> wyniki {wynik_zad1, wynik_zad2,wynik_zad3};
 
     std::cout << "Result will be saved to output.txt file" << std::endl;
-    //manager.saveData("output.txt", data);
+    manager.saveData("wyniki.txt", wyniki);
 }
 
 }  // namespace prework

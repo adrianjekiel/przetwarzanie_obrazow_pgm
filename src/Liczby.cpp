@@ -6,13 +6,14 @@
 #include "Liczby.hpp"
 #include <algorithm>
 #include <sstream>
+#include <vector>
 namespace prework
 {
 Liczby::Liczby(const std::vector<int>& vecLiczby) :
     vecLiczby_(vecLiczby) //nabijanie
 {}
 
-void Liczby::zad1()
+std::string Liczby::zad1()
 {
     int licznik = 0;
     for(auto elem : vecLiczby_)
@@ -34,7 +35,8 @@ void Liczby::zad1()
         }
 
     }
-    std::cout<<licznik<<" - ilosc liczb, ktore sa potega 3."<<std::endl;
+
+    return std::string {licznik + "- ilosc liczb, ktore sa potega 3."};//
 }
 void Liczby::zad2()
 {
@@ -86,38 +88,40 @@ std::vector<std::string> Liczby::convertToString ()
 
 void Liczby::zad3()
 {
+    int nwdfinal;
     int nwdo =vecLiczby_[0];
-    int temp_dl=0;
-    int max_dl=0;
     std::vector<int> temp_vec;
     std::vector<int> max_vec ;
-    for(int liczba : vecLiczby_)
+    for(int i =0; i<vecLiczby_.size();i++)
     {
-        if(nwd(nwdo,liczba)>1)
+        nwdo = nwd(nwdo,vecLiczby_[i+1]);
+        if(nwdo>1)
         {
-            temp_dl++;
-            temp_vec.push_back(liczba);
+            temp_vec.push_back(vecLiczby_[i]);
+            nwdfinal = nwdo;
         }
         else
         {
-            if(temp_dl>max_dl)
-            {
-                max_dl = temp_dl;
+            temp_vec.push_back(vecLiczby_[i]);
+            if(temp_vec.size()>max_vec.size())
+            {  
                 max_vec = temp_vec;
-                temp_dl = 0;
-                temp_vec.clear();
+
             }
-         nwdo=liczba;
+         temp_vec.clear();
+
+         nwdo=vecLiczby_[i+1];
         }
     }
+    std::cout<<nwdfinal<<std::endl;
     std::cout<<max_vec[0]<<std::endl;
     std::cout<<max_vec.size()<<std::endl;
-    std::sort(max_vec.begin(),max_vec.end());
-    std::cout<<max_vec[max_vec.size()-1]<<std::endl;
 }
 
-int nwd(int liczba_pierwsza, int liczba_druga)
+int Liczby::nwd(int liczba_pierwsza, int liczba_druga)
 {
+
+
     int pom;
     while(liczba_druga!=0)
     {
@@ -125,6 +129,7 @@ int nwd(int liczba_pierwsza, int liczba_druga)
         liczba_druga = liczba_pierwsza%liczba_druga;
         liczba_pierwsza = pom;
     }
+
     return liczba_pierwsza;
 }
 
