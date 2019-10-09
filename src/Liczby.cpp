@@ -35,10 +35,10 @@ std::string Liczby::zad1()
         }
 
     }
-
-    return std::string {licznik + "- ilosc liczb, ktore sa potega 3."};//
+    std::string wynik1 = std::to_string(licznik);
+    return std::string {wynik1 + "- ilosc liczb, ktore sa potega 3."};
 }
-void Liczby::zad2()
+std::string Liczby::zad2()
 {
     for(auto elem : convertToString())//elem = string  convert to stering = vector
     {
@@ -46,7 +46,7 @@ void Liczby::zad2()
         int temp_liczba = std::stoi(elem);//z stringa w int
         if(temp_liczba==liczba)
         {
-            std::cout<<elem<<std::endl;
+            return std::string {elem};
         }
     }
 }
@@ -86,7 +86,7 @@ std::vector<std::string> Liczby::convertToString ()
     return tempvec;
 }
 
-void Liczby::zad3()
+std::string Liczby::zad3()
 {
     int nwdfinal;
     int nwdo =vecLiczby_[0];
@@ -113,9 +113,15 @@ void Liczby::zad3()
          nwdo=vecLiczby_[i+1];
         }
     }
-    std::cout<<nwdfinal<<std::endl;
-    std::cout<<max_vec[0]<<std::endl;
-    std::cout<<max_vec.size()<<std::endl;
+    std::string wynik1 = std::to_string(nwdfinal);
+    std::string wynik2 = std::to_string(max_vec[0]);
+    std::string wynik3 = std::to_string(max_vec.size());
+//    std::cout<<nwdfinal<<std::endl;
+//    std::cout<<max_vec[0]<<std::endl;
+    //std::cout<<max_vec.size()<<std::endl; to w ogole nie potrzebne
+    return std::string {wynik1 + " " + wynik2 + " " + wynik3};
+
+
 }
 
 int Liczby::nwd(int liczba_pierwsza, int liczba_druga)

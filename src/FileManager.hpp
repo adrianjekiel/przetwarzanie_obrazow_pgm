@@ -17,7 +17,7 @@ class FileManager
 {
 public:
     std::vector<int> loadData(const std::string& fileName);
-    bool saveData(const std::string& fileName, const std::vector<std::string>& string_vec);
+    void saveData(const std::string& fileName, const std::vector<std::string>& string_vec);
 };
 
 }  // namespace prework

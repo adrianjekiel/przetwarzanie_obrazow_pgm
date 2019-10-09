@@ -17,9 +17,9 @@ class Liczby
 {
 public:
     Liczby(const std::vector<int>& vecLiczby);
-    void zad1();
-    void zad2();
-    void zad3();
+    std::string zad1();
+    std::string zad2();
+    std::string zad3();
     int nwd(int,int);
 private:
     int silnia(int);

@@ -24,7 +24,7 @@ void run()
     std::string wynik_zad3 = liczby.zad3();
     std::vector<std::string> wyniki {wynik_zad1, wynik_zad2,wynik_zad3};
 
-    std::cout << "Result will be saved to output.txt file" << std::endl;
+    std::cout << "Result will be saved to wyniki.txt file" << std::endl;
     manager.saveData("wyniki.txt", wyniki);
 }
 
