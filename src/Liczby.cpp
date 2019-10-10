@@ -86,36 +86,60 @@ std::vector<std::string> Liczby::convertToString ()
     return tempvec;
 }
 
+// 1. wazna rzecz do zauwazenia, ostatni elemenst z poprzedniego ciagu, moze byc tez pierwszym z nastepnego,
+// czyli 2,4,18,9,3 --> jeden ciag {2,4,18} -> nwd 2 i drugi ciag {18,9,3} -> nwd 3
+
 std::string Liczby::zad3()
 {
-    int nwdfinal;
-    int nwdo =vecLiczby_[0];
-    std::vector<int> temp_vec;
-    std::vector<int> max_vec ;
-    for(int i =0; i<vecLiczby_.size();i++)
+    // nwd_final to ostateczne nwd ktore szukamy, semi_fnal_nwd symbolizuje najwieksze nwd w zbiorze gdzie nwd > 1
+    // ewentualnie je przypiszemy do nwd_final jesli dlugosc ciagu znalezionego bedzie dluzsza niz aktualnie przechowywanego
+
+    int nwdfinal, semi_final_nwd;
+    int current_nwd = vecLiczby_[0];
+
+    // temp_vec sluzy do przechowywania aktualnych ciagow liczb, max_vec jest to najdluzszy znaleziony ciag
+    std::vector<int> temp_vec, max_vec;
+
+    for(int i = 0; i < vecLiczby_.size(); i++)
     {
-        nwdo = nwd(nwdo,vecLiczby_[i+1]);
-        if(nwdo>1)
+        // warto zauwazyc ze w pierwszej iteracji szukamy nwd vecLiczby_[0] z vecLiczby_[0]
+        current_nwd = nwd(current_nwd, vecLiczby_[i]);
+
+        if(current_nwd>1) // jesli nwd liczb jest wieksze od 1
         {
             temp_vec.push_back(vecLiczby_[i]);
-            nwdfinal = nwdo;
+            semi_final_nwd = current_nwd;
         }
-        else
+        else // znalezlismy koniec ciagu
         {
-            temp_vec.push_back(vecLiczby_[i]);
-            if(temp_vec.size()>max_vec.size())
+            if(temp_vec.size()>max_vec.size()) // znalezlismy dluzszy ciag
             {  
-                max_vec = temp_vec;
-
+                max_vec.swap(temp_vec); // to swap
+                nwdfinal = semi_final_nwd; // i przypisanie maxymalnego dzielnika
             }
-         temp_vec.clear();
+            temp_vec.clear(); // i szyscimy temp vector
 
-         nwdo=vecLiczby_[i+1];
+            // teraz czas na ten pokrecony warunek opisany nad funkcja
+            // zauwaz ze tutaj current_nwd to najwiekszy wspolny dzielnik wczesniej wyliczony, jesli weszlismy w else to na poczatku jego wartosc to 1,
+            // dlatego sprawdzamy z vecLiczby_[i-1] a nie current_nwd jak w lini 106
+            current_nwd = nwd(vecLiczby_[i-1], vecLiczby_[i]);
+            if (current_nwd > 1) // liczba konczaca poprzedni ciag ma wspolny dzielnik z kolejna z nia liczba --> nie myl z nwd poprzedniego ciagu, to dwie rozne liczby
+            {
+                temp_vec.push_back(vecLiczby_[i-1]); // to wrzucamy jeszcze ta poprzednia
+                semi_final_nwd = current_nwd; // no i mamy nowy semi_final_nwd
+            }
+            else // no jesli nie maja wspolnego dzielnika, to jednak vecLiczby_[i] bedzie rozpoczynal kolejny ciag
+            {
+                current_nwd = vecLiczby_[i]; // aktualne nwd to jest vecLiczby_[i], bo od niej zaczynamy
+            }
+            temp_vec.push_back(vecLiczby_[i]); // i nasz nowy vector bedzie sie od tej liczby zaczynal
         }
     }
     std::string wynik1 = std::to_string(nwdfinal);
     std::string wynik2 = std::to_string(max_vec[0]);
     std::string wynik3 = std::to_string(max_vec.size());
+    std::cout << "wyniki: " << std::endl;
+    std::cout << "nwd: " << wynik1 << " \npierwsza liczba ze zbioru: " << wynik2 << "\ndlugosc zbioru : " << wynik3 << std::endl;
 //    std::cout<<nwdfinal<<std::endl;
 //    std::cout<<max_vec[0]<<std::endl;
     //std::cout<<max_vec.size()<<std::endl; to w ogole nie potrzebne

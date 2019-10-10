@@ -13,9 +13,9 @@ namespace prework
 
 void run()
 {
-    std::string fileName;
-    std::cout << "Please insert file name to process" << std::endl;
-    std::cin >> fileName;
+    std::string fileName{"liczby.txt"};
+//    std::cout << "Please insert file name to process" << std::endl;
+//    std::cin >> fileName;
     auto manager = prework::FileManager();
     auto data = manager.loadData(fileName);
     auto liczby = Liczby(data);
